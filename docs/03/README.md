@@ -5,9 +5,9 @@
 Singer:Album=1:N (일대다, 다대일)  
 Singer:RecordLabel = N:M (다대다)
 
-그리고 일대일 예제는 Person - PersonDetail 을 사용하겠습니다. 일대일 관계는 마스터-디테일 관계를 의미합니다.
+그리고 일대일 예제는 Phone - PhoneDetail을 사용하겠습니다. 일대일 관계는 마스터-디테일 관계를 의미합니다.
 
-Person:PersonDetail = 1:1 (일대일)
+Phone:PhoneDetail = 1:1 (일대일)
 
 관계형DB 관점에서 보면 단순하게 보일 수 있는데 이것을 매핑했을 때 JPA에서 어떻게 처리되는지를 중심으로 살펴보도록 하겠습니다.
 
