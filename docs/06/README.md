@@ -57,9 +57,7 @@ public class Singer
 @JoinColumn(name = "singer_id")
 private Set<Album> albums = new HashSet<>();
 ```
-일반적으로 단방향 @OneToMany는 부가적인 쿼리를 수행하기 때문에 권장하지 않습니다. 단방향 @OneToMany는 @ManyToOne의 관계로(어차피 관계 자체는 달라지지 않으므로) 변경하거나 parent의 PK로 child를 가져올 때는 직접 JPQL로 해결하는 것을 조언하고 있습니다.
-
-JPQL이란 SQL과 유사하지만 객체들을 대상으로 하는 쿼리문이라고 생각하면 됩니다.
+일반적으로 단방향 @OneToMany는 부가적인 쿼리를 수행하기 때문에 권장하지 않습니다. 단방향 @OneToMany는 @ManyToOne의 관계로(어차피 관계 자체는 달라지지 않으므로) 변경하거나 parent의 PK로 child를 가져올 때는 직접 JPQL로 해결하는 방법을 생각해 볼 수 있습니다. JPQL이란 SQL과 유사하지만 객체들을 대상으로 하는 쿼리문이라고 생각하면 됩니다.
 
 하이버네이트 가이드에서는 차라리 양방향 OneToMany를 설정하는 것이 바람직하다고 설명합니다.
 >On the other hand, a bidirectional @OneToMany association is much more efficient because the child entity controls the association.
