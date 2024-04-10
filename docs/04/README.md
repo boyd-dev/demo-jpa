@@ -81,6 +81,6 @@ JPA는 표준 스펙일 뿐이므로 이를 구현한 실제 라이브러리가 
   ```
   또 트랜잭션 경계설정을 위해 구성 클래스에 `@EnableTransactionManagement`을 추가합니다. 
   
-  전체 구성 클래스는 [여기]()를 참조하면 되겠습니다.
+  전체 구성 클래스는 [여기](https://github.com/boyd-dev/demo-jpa/blob/main/example/demog-spring/src/main/java/com/foo/jpa/config/AppConfig.java)를 참조하면 되겠습니다.
 
   [처음](../README.md) | [다음](../05/README.md)
