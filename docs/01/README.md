@@ -14,7 +14,7 @@ ORM은 자바만의 유일한 기술이 아닙니다. C#과 같은 객체지향 
 참고로 MyBatis는 ORM 기술에 포함되기는 하지만 JPA 표준과는 무관하게 ORM 기술을 구현하기 때문에 JPA와는 구분합니다.
 
 ## 하이버네이트(Hibernate)
-JPA 구현체 중 가장 널리 사용되는 것이 하이버네이트 라이브러러입니다. 사실 하이버네이트가 스프링의 JPA라고 해도 될 정도로 두 가지를 구별없이 사용하기 때문에 다소 혼란스러울 수 있습니다. 이것을 정리하려면 스프링 공식 문서를 [인용](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/data-access.html#orm-jpa-setup)할 필요가 있을 것 같습니다.
+JPA 구현체 중 가장 널리 사용되는 것이 하이버네이트 라이브러러입니다. 사실 하이버네이트가 스프링의 JPA라고 해도 될 정도로 두 가지를 구별없이 사용하기 때문에 다소 혼란스러울 수 있습니다. 그래서 스프링 공식 문서를 [인용](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/data-access.html#orm-jpa-setup)할 필요가 있을 것 같습니다.
 
 >The Spring JPA support offers three ways of setting up the JPA EntityManagerFactory that is used by the application to obtain an entity manager.
 
@@ -27,7 +27,7 @@ JPA 구현체 중 가장 널리 사용되는 것이 하이버네이트 라이브
 - Using LocalContainerEntityManagerFactoryBean  
 
 
-처음 두 개는 잘 사용하지 않습니다. 대부분은 세번째 `LocalContainerEntityManagerFactoryBean`을 사용합니다. 당연히 `org.springframework.orm.jpa` 패키지에 있는 클래스입니다. 이 클래스를 스프링 빈으로 설정하는 방법은 나중에 코드를 보면서 설명하기로 하겠습니다.
+처음 두 개는 잘 사용하지 않습니다. 대부분은 세번째 `LocalContainerEntityManagerFactoryBean`을 사용합니다. 당연히 `org.springframework.orm.jpa` 패키지에 있는 클래스입니다. 이 클래스를 스프링 빈으로 설정할 때 JPA 구현체를 지정합니다. 빈 설정은 나중에 코드를 보면서 설명하기로 하겠습니다.
 
 그런데 세번째에 속하지만 JPA 표준 대신 구현체의 "native" API를 사용하는 방법도 소개되어 있습니다. 스프링에서는 구현체로 하이버네이트를 사용하므로 하이버네이트를 기준으로 아래와 같이 설명합니다.
 
