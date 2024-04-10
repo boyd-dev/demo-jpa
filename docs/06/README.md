@@ -10,9 +10,7 @@
 - @OneToOne
 - @ManyToMany
 
-엔티티들 사이의 관계는 해당 엔티티를 속성에 포함시키고 그 속성에 위 어노테이션 중 하나를 적용하는 형식으로 이루어집니다.
-
-연관 관계의 설명은 다소 복잡하기 하기 때문에 하이버네이트 [사용자 가이드](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#associations)를 중심으로 정리하겠습니다. 
+엔티티들 사이의 관계는 해당 엔티티를 속성에 포함시키고 그 속성에 위 어노테이션 중 하나를 적용하는 형식으로 이루어집니다. 연관 관계의 설명은 다소 복잡하기 하기 때문에 하이버네이트 [사용자 가이드](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#associations)를 중심으로 정리하겠습니다. 
 
 ## 단방향 @ManyToOne, @OneToMany
 우선 Singer와 Album을 살펴보겠습니다. Singer는 여러 개의 Album을 가집니다. 반대로 다수의 Album은 한 명의 Singer에 매핑됩니다. DB 관점에서 보면 parent-child 처럼 일대다 관계를 떠올릴 수 있을 것입니다.  
@@ -59,7 +57,7 @@ public class Singer
 @JoinColumn(name = "singer_id")
 private Set<Album> albums = new HashSet<>();
 ```
-일반적으로 단방향 @OneToMany는 부가적인 쿼리를 수행하기 때문에 권장하지 않습니다. 단방향 @OneToMany는 @ManyToOne의 관계로(어차피 관계 자체는 달라지지 않으므로) 변경하거나 Singer로 Album을 가져올 때는 직접 JPQL로 해결하는 것을 [조언](https://thorben-janssen.com/best-practices-many-one-one-many-associations-mappings/)하고 있습니다.
+일반적으로 단방향 @OneToMany는 부가적인 쿼리를 수행하기 때문에 권장하지 않습니다. 단방향 @OneToMany는 @ManyToOne의 관계로(어차피 관계 자체는 달라지지 않으므로) 변경하거나 parent의 PK로 child를 가져올 때는 직접 JPQL로 해결하는 것을 [조언](https://thorben-janssen.com/best-practices-many-one-one-many-associations-mappings/)하고 있습니다.
 
 JPQL이란 SQL과 유사하지만 객체들을 대상으로 하는 쿼리문이라고 생각하면 됩니다.
 
