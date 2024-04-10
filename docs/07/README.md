@@ -158,7 +158,7 @@ public boolean addAlbum(Album album) {
 	return getAlbums().add(album);		
 }	
 ```
-이렇게 하면 setter를 매번 써주지 않고 `addAlbum` 호출로 양방향으로 설정된 객체에 서로의 데이터를 넣어줄 수 있습니다. 객체가 준비되었으면 이제 이것은 서비스 클래스에 전달하고 서비스는 다시 DAO를 통해 DB에 저장하게 됩니다.
+이렇게 하면 setter를 매번 써주지 않고 `addAlbum` 호출로 양방향으로 설정된 객체에 서로의 데이터를 넣어줄 수 있습니다. 객체가 준비되었으면 이제 이것은 서비스에 전달하고 서비스는 다시 DAO를 통해 DB에 저장하게 됩니다.
 
 ```
 service.insert(singer);
