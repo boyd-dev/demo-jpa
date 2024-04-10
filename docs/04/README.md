@@ -47,7 +47,7 @@ JPA는 표준 스펙일 뿐이므로 이를 구현한 실제 라이브러리가 
   ```
   @Bean
   public JpaVendorAdapter jpaVendorAdapter() {		
-  		return new HibernateJpaVendorAdapter();
+    return new HibernateJpaVendorAdapter();
   }
   ```
 
@@ -75,7 +75,7 @@ JPA는 표준 스펙일 뿐이므로 이를 구현한 실제 라이브러리가 
   ```
   @Bean
   public PlatformTransactionManager transactionManager() {
-		return new JpaTransactionManager(entityManagerFactory());
+	  return new JpaTransactionManager(entityManagerFactory());
 		
   }
   ```
