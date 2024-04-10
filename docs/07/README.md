@@ -90,26 +90,26 @@ public Singer insert(Singer singer) {
 @Test
 void testInsert() {
 		
-		Singer singer = new Singer();
+	Singer singer = new Singer();
 		
-		singer.setFirstName("Adele");
-		singer.setLastName("Adkins");
-		Date bd = Date.from(Instant.parse("1988-05-05T00:00:00Z"));
-		singer.setBirthDate(bd);
+	singer.setFirstName("Adele");
+	singer.setLastName("Adkins");
+	Date bd = Date.from(Instant.parse("1988-05-05T00:00:00Z"));
+	singer.setBirthDate(bd);
 				
-		Album album = new Album();
-		album.setTitle("Easy On Me");
-		Date d = Date.from(Instant.parse("2021-10-14T00:00:00Z"));
-		album.setReleaseDate(d);
-		singer.addAlbum(album);
+	Album album = new Album();
+	album.setTitle("Easy On Me");
+	Date d = Date.from(Instant.parse("2021-10-14T00:00:00Z"));
+	album.setReleaseDate(d);
+	singer.addAlbum(album);
 		
-		album = new Album();
-		album.setTitle("Hello");
-		d = Date.from(Instant.parse("2015-10-23T00:00:00Z"));
-		album.setReleaseDate(d);
-		singer.addAlbum(album);
+	album = new Album();
+	album.setTitle("Hello");
+	d = Date.from(Instant.parse("2015-10-23T00:00:00Z"));
+	album.setReleaseDate(d);
+	singer.addAlbum(album);
 		
-		service.insert(singer);
+	service.insert(singer);
 
 }
 ```

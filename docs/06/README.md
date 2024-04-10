@@ -26,6 +26,7 @@ parent-child 관계에서 보통 FK는 child에 설정됩니다. Singer가 없�
 이제 `@ManyToOne` 어노테이션을 Album 엔티티에 아래와 같이 추가합니다. "Many"에 해당하는 것이 Album이기 때문입니다.
 
 ```
+@Entity
 public class Album
 ...
 @ManyToOne
@@ -38,6 +39,7 @@ private Singer singer;
 그렇다면 Singer와 Album의 관계를 @OneToMany로 설정할 수도 있지 않을까요? 맞습니다. 그런데 하이버네이트는 다소 비효율적인 방식으로 @OneToMany를 설정합니다. 이제 `@OneToMany` 어노테이션을 Singer에 추가해봅니다(Album에 설정한 `@ManyToOne`은 제거합니다).
 
 ```
+@Entity
 public class Singer 
 ...
 @OneToMany
@@ -50,6 +52,7 @@ private Set<Album> albums = new HashSet<>();
 
 중간 테이블을 생성시키지 않고 FK만 맺으려면 아래와 같이 `@JoinColumn`을 사용할 수 있습니다.
 ```
+@Entity
 public class Singer 
 ...
 @OneToMany
@@ -68,6 +71,7 @@ JPQL이란 SQL과 유사하지만 객체들을 대상으로 하는 쿼리문이�
 일대다와 다대일은 관점에 따라 다를 뿐이므로 @ManyToOne과 @OneToMany의 양방향은 두 어노테이션을 모두 사용하여 연관 관계를 설정합니다. 즉 Singer와 Album을 양방향으로 설정하면 다음과 같습니다.
 
 ```
+@Entity
 public class Singer 
 ...
 @OneToMany(mappedBy = "singer")
@@ -75,6 +79,7 @@ private Set<Album> albums = new HashSet<>();
 ```
 
 ```
+@Entity
 public class Album
 ...
 @ManyToOne
@@ -102,6 +107,7 @@ Singer와 Album의 양방향은 Singer에 `mappedBy`로 child의 속성명을 �
 Singer를 조회하면서 Singer의 Album 데이터들을 가져오는 경우가 있습니다. 관계 어노테이션에는 `FetchType`이라는 속성이 있는데, 이것은 연관된 데이터를 함께 가져올 것인지 아니면 필요할 때만 가져올 것인지에 대한 옵션입니다. (대부분) 디폴트는 `FetchType.LAZY`로 연관 데이터를 나중에 가져오도록 되어 있습니다.
 
 ```
+@Entity
 public class Singer 
 ...
 @OneToMany(mappedBy = "singer", fetch = FetchType.LAZY)
@@ -123,6 +129,7 @@ Phone은 전화기 고유번호를 저장하는 master에 해당하고 PhoneDeta
 master-detail 관계에서 master에 데이터가 없으면 detail에도 없는 것이 당연하기 때문에 FK는 detail 쪽에 생기는 것이 맞습니다. 그래서 양방향 @OneToOne을 설정하면 FK가 PhoneDetail에 만들어집니다. 
 
 ```
+@Entity
 public class Phone 
 ...
 @OneToOne(mappedBy = "phone")
@@ -130,6 +137,7 @@ private PhoneDetail detail;
 ```
 
 ```
+@Entity
 public class PhoneDetail
 ...
 @OneToOne
@@ -146,6 +154,7 @@ CONSTRAINT `FKe...y71` FOREIGN KEY (`recordLabels_id`) REFERENCES `record_label`
 ```
 
 ```
+@Entity
 public class Singer
 ...
 @ManyToMany(fetch = FetchType.LAZY)
@@ -153,6 +162,7 @@ private List<RecordLabel> recordLabels = new ArrayList<>();
 ```
 
 ```
+@Entity
 public class RecordLabel
 ...
 @ManyToMany(mappedBy = "recordLabels", fetch = FetchType.LAZY)
