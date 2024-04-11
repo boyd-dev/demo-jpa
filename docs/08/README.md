@@ -26,7 +26,7 @@ public class AppConfig {
 
 스프링 데이터 JPA의 가장 큰 특징은 중복되는 코드를 줄여준다는 것입니다. 앞서 예제에서 살펴본 것처럼 DAO 클래스를 작성할 때 유사한 코드가 나열되는 경우가 많이 있습니다. 즉 전달된 엔티티를 받고 EntityManager를 사용하여 DB로부터 읽거나 쓰거나 하는 코드들이 대부분입니다. 
 
-스프링 데이터 JPA는 이것을 "Repository 추상화"라는 이름으로 단순화시켰습니다. DAO인터페이스를 정의하고 DAO 구현 객체를 통해서 데이터를 처리하는 방식을 `JpaRepository`라는 인터페이스 하나만을 정의하는 것으로 간소화했습니다. 예를 들어 `SingerDao`, `SingerDaoImpl`은 아래와 같이 하나의 인터페이스 정의로 대체할 수 있습니다.
+스프링 데이터 JPA는 이것을 "Repository 추상화"라는 이름으로 단순화시켰습니다. DAO인터페이스를 정의하고 DAO 구현 객체를 통해서 데이터를 처리하는 방식 대신 `JpaRepository`라는 인터페이스 하나만을 정의하는 것으로 간소화했습니다. 예를 들어 `SingerDao`, `SingerDaoImpl`은 아래와 같이 하나의 인터페이스 정의로 대체할 수 있습니다.
 
 ```
 public interface SingerRepository extends JpaRepository<Singer, Long> {	
