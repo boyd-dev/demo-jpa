@@ -58,9 +58,9 @@ public class SingerServiceImpl implements SingerService {
     }
 
     @Override
-	public Singer findById(Long singerId) {		
-		return singerRepository.findById(singerId).orElse(null);
-	}
+    public Singer findById(Long singerId) {		
+	    return singerRepository.findById(singerId).orElse(null);
+    }
 
     @Override
     public Singer insertOrUpdate(Singer singer) {
