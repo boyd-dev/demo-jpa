@@ -45,7 +45,7 @@ public class SingerDaoImpl implements SingerDao {
 	@Override
 	public RecordLabel findRecordLabel(RecordLabel recordLabel) {
 		return em.createNamedQuery("RecordLabel.Find_RecordLabel_With_Singer", RecordLabel.class)
-				.setParameter(0, recordLabel.getLabel())
+				.setParameter(1, recordLabel.getLabel())
 				.getResultStream().findFirst().orElse(null);
 	}
 

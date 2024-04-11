@@ -20,7 +20,7 @@ import javax.persistence.Table;
 		{
 			@NamedQuery(
 				name = "RecordLabel.Find_RecordLabel_With_Singer",
-				query = "select r from RecordLabel r left join fetch r.singers s where r.label = ?0"
+				query = "select r from RecordLabel r left join fetch r.singers s where r.label = ?1"
 			)
 		}
 )
