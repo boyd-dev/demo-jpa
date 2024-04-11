@@ -65,12 +65,12 @@ public class SingerServiceImpl implements SingerService {
     @Override
     public Singer insertOrUpdate(Singer singer) {
         return singerRepository.save(singer);
-	}
+    }
 
-	@Override
+    @Override
     public void delete(Singer singer) {
-	    singerRepository.delete(singer);		
-	}
+        singerRepository.delete(singer);		
+    }
     ...
 }
 ```
