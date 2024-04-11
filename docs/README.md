@@ -24,5 +24,6 @@
 5. [엔티티 매핑](05/README.md)
 6. [연관 관계](06/README.md)
 7. [CRUD 테스트](07/README.md)
+8. [스프링 데이터 JPA](08/README.md)
 
 
