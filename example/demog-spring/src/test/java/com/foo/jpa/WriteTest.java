@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -60,7 +58,6 @@ class WriteTest {
 		
 		Singer singer = new Singer();
 		
-		Set<Album> albums = new HashSet<>();
 		// 1.
 		singer.setFirstName("Adele");
 		singer.setLastName("Adkins");
@@ -71,19 +68,14 @@ class WriteTest {
 		album.setTitle("Easy On Me");
 		Date d = Date.from(Instant.parse("2021-10-14T00:00:00Z"));
 		album.setReleaseDate(d);
-		//singer.addAlbum(album);
-		album.setSinger(singer);
-		albums.add(album);
+		singer.addAlbum(album);
 		
 		album = new Album();
 		album.setTitle("Hello");
 		d = Date.from(Instant.parse("2015-10-23T00:00:00Z"));
 		album.setReleaseDate(d);
-		//singer.addAlbum(album);
-		album.setSinger(singer);
-		albums.add(album);
+		singer.addAlbum(album);
 		
-		singer.setAlbums(albums);
 		service.insert(singer);
 		
 		//2. 
@@ -144,7 +136,7 @@ class WriteTest {
 		recordLabel.setLabel("Sony Music Entertainment");
 		result = service.insert(recordLabel);
 		
-		assertNotNull(result);		
+		assertNotNull(result.getId());		
 	}
 	
 	@Test
@@ -205,7 +197,6 @@ class WriteTest {
 		 service.update(singer);
 		 assertTrue(result);
 		 		
-	}
-	
+	}	
 
 }
