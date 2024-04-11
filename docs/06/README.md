@@ -85,7 +85,7 @@ private Singer singer;
 
 Singer와 Album의 양방향은 Singer에 `mappedBy`로 child의 속성명을 지정합니다. 나머지는 `@ManyToOne`과 `@OneToMany` 어노테이션을 각각 추가한 것과 동일합니다. DB의 parent-child는 하이버네이트에서 @ManyToOne 또는 @OneToMany의 양방향 관계라고 볼 수 있겠습니다.
 
-하이버네이트에서 모든 양방향은 FK가 생기는 child와 반대 쪽은 `mappedBy`로 그것을 참조하는 형태로 설정됩니다. 
+하이버네이트에서 모든 양방향은 FK가 생기는 child와 그 반대 쪽에 `mappedBy`로 그것을 참조하는 형태로 설정됩니다. 
 
 >Every bidirectional association must have one owning side only (the child side), the other one being referred to as the inverse (or the mappedBy) side.
 
