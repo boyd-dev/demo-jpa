@@ -290,4 +290,4 @@ Singer를 조회한 후에 `recordLabels`에서 해당 레코드사를 삭제한
 ```
 이때 `label` 속성 값이 같은 것을 동일한 레코드사로 보고 Set에서 삭제할 것이므로 `RecordLabel` 클래스에 `hashCode`와 `equals` 메소드를 오버라이드할 필요가 있습니다.
 
-[처음](../README.md)
+[처음](../README.md) | [다음](../08/README.md)
