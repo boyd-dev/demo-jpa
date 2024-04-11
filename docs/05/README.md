@@ -34,6 +34,8 @@ public abstract class BaseEntity {
 엔티티 이름에 대응되는 테이블 이름을 `name` 속성으로 명시적으로 지정할 수 있습니다. 이것을 생략하는 경우는 디폴트 네이밍 전략 `ImplicitNamingStrategyJpaCompliantImpl`이 적용됩니다. 보통 엔티티 이름과 동일하게 소문자로 테이블이 생성됩니다.
 
 ```
+@Entity(name = "Singer")
+@Table(name = "singer")
 public class Singer extends BaseEntity implements Serializable {
 	
 	@Column(name = "first_name")	

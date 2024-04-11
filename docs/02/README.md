@@ -1,7 +1,7 @@
 ## JDK+하이버네이트+JPA 버전
 스프링에서 JPA를 쓰기 위해서는 관련 디펜던시 라이브러리를 설치해야 합니다. 자바에서는 사용하려는 JDK에 맞는 라이브러리를 찾는 것이 일반적입니다. JPA 구현체인 하이버네이트는 JPA 표준의 버전이 있기 때문에 어떤 JPA 표준을 구현했는지도 알아야 합니다.
 
-어떤 라이브러리를 써야 하는지는 하이버네이트의 아래 사이트를 참고하면 도움이 될 것 같습니다. 여기서는 하이버네이트 5.3.36.Final을 기준으로 합니다.
+어떤 라이브러리를 써야 하는지는 JPA 표준과 하이버네이트의 아래 사이트를 참고하면 도움이 될 것 같습니다. 여기서는 하이버네이트 5.3.36.Final을 기준으로 합니다.
 
 [JPA Specification](https://jakarta.ee/specifications/persistence/)  
 [Hibernate release](https://hibernate.org/orm/releases/5.3/)
