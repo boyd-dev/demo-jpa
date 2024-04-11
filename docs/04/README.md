@@ -1,9 +1,7 @@
 ## 스프링 설정
 이 예제에서는 스프링 설정을 위해 구성 클래스 `@Configuration`을 사용합니다.  
 스프링에서 JPA를 쓰기 위해서는 (세가지 옵션 중) `LocalContainerEntityManagerFactoryBean`을 사용하겠습니다. 이 빈을 정의하기 위해서는 몇 가지 속성을 주입해야 합니다. 주요 설정은 아래와 같습니다.
-- DataSource
-- JpaProperties
-- JpaVendorAdaptor
+
 
   ```
   @Bean
