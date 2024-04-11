@@ -52,9 +52,9 @@ public class SingerServiceImpl implements SingerService {
 
     private SingerRepository singerRepository;
 	
-	@Autowired
-	public void setSingerRepository(SingerRepository singerRepository) {
-		this.singerRepository = singerRepository;
+    @Autowired
+    public void setSingerRepository(SingerRepository singerRepository) {
+        this.singerRepository = singerRepository;
     }
 
     @Override
@@ -63,13 +63,13 @@ public class SingerServiceImpl implements SingerService {
 	}
 
     @Override
-	public Singer insertOrUpdate(Singer singer) {
-		return singerRepository.save(singer);
+    public Singer insertOrUpdate(Singer singer) {
+        return singerRepository.save(singer);
 	}
 
 	@Override
-	public void delete(Singer singer) {
-		singerRepository.delete(singer);		
+    public void delete(Singer singer) {
+	    singerRepository.delete(singer);		
 	}
     ...
 }
