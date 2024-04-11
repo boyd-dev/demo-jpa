@@ -3,6 +3,7 @@
 
 어떤 라이브러리를 써야 하는지는 하이버네이트의 아래 사이트를 참고하면 도움이 될 것 같습니다. 여기서는 하이버네이트 5.3.36.Final을 기준으로 합니다.
 
+[JPA Specification](https://jakarta.ee/specifications/persistence/)  
 [Hibernate release](https://hibernate.org/orm/releases/5.3/)
 
 ## JDK와 스프링 버전
