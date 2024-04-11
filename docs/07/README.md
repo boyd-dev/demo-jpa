@@ -1,5 +1,5 @@
 ## DAO, Service, Test
-이제 간단한 CRUD를 만들어보기로 합니다. 우선 DAO 인터페이스를 정의합니다.
+이제 간단한 CRUD를 만들어보기로 합니다. DAO 인터페이스를 정의합니다.
 ```
 public interface SingerDao {	
 	
@@ -115,7 +115,7 @@ void testInsert() {
 ```
 우선 Singer를 하나 생성합니다. 이렇게 new로 생성된 객체는 "transient" 상태로 아직 DB에 반영되지 않았습니다.  Singer의 각 속성들을 입력합니다. 그리고 Album도 함께 생성합니다.  
 
-현재 Singer와 Album은 @ManyToOne 양방향으로 설정되어 있습니다. Singer를 인서트하면서 그 Singer의 Album 두 개를 함께 저장시키려고 합니다. 이렇게 하기 위해서는 Singer의 매핑 어노테이션에 다음과 같이 `cascade`설정이 필요합니다. `cascade`는 FK 관계에 따라 연관 데이터들을 함께 변경시키는 것을 말합니다. SQL로 말하자면 foreign key ON DELETE CASCADE와 ON UPDATE CASCADE에 해당합니다.
+현재 Singer와 Album은 @ManyToOne 양방향으로 설정되어 있습니다. Singer를 인서트하면서 그 Singer의 Album 두 개를 함께 저장시키려고 합니다. 이렇게 하기 위해서는 Singer의 매핑 어노테이션에 다음과 같이 `cascade`설정이 필요합니다. `cascade`는 FK 관계에 따라 연관 데이터들을 함께 변경시키는 것을 말합니다. SQL로 말하자면 foreign key ON DELETE CASCADE와 ON UPDATE CASCADE과 유사합니다.
 ```
 @OneToMany(
     mappedBy = "singer", 
@@ -158,7 +158,7 @@ public boolean addAlbum(Album album) {
 	return getAlbums().add(album);		
 }	
 ```
-이렇게 하면 setter를 매번 써주지 않고 `addAlbum` 호출로 양방향으로 설정된 객체에 서로의 데이터를 넣어줄 수 있습니다. 객체가 준비되었으면 이제 이것은 서비스에 전달하고 서비스는 다시 DAO를 통해 DB에 저장하게 됩니다.
+이렇게 하면 setter를 매번 써주지 않고 `addAlbum` 호출로 양방향으로 설정된 객체에 서로의 데이터를 넣어줄 수 있습니다. 객체가 준비되었으면 이것을 서비스에 전달하고 서비스는 다시 DAO를 거쳐 DB에 저장하게 됩니다.
 
 ```
 service.insert(singer);
@@ -224,12 +224,12 @@ public RecordLabel findRecordLabel(RecordLabel recordLabel) {
 @Entity(name = "RecordLabel")
 @Table(name = "record_label")
 @NamedQueries(
-		{
-			@NamedQuery(
-				name = "RecordLabel.Find_RecordLabel_With_Singer",
-				query = "select r from RecordLabel r left join fetch r.singers s where r.label = ?0"
-			)
-		}
+	{
+		@NamedQuery(
+			name = "RecordLabel.Find_RecordLabel_With_Singer",
+			query = "select r from RecordLabel r left join fetch r.singers s where r.label = ?0"
+		)
+	}
 )
 public class RecordLabel extends BaseEntity implements Serializable {
 ...

@@ -19,7 +19,7 @@
 		return factoryBean.getNativeEntityManagerFactory();
   }	
   ```
-  `setPackagesToScan`은 정의된 엔티티가 있는 패키지를 배열로 나열합니다. EntityManagerFactory는 이렇게 스캔한 엔티티를 기준으로 테이블과 매핑하게 됩니다.
+  `setPackagesToScan`은 정의된 엔티티가 있는 패키지를 배열로 나열합니다. EntityManagerFactory는 여기서 스캔한 엔티티를 기준으로 테이블과 매핑하게 됩니다.
 - `DataSource`는 관계형DB로 사용할 MySQL과의 연결 설정입니다. 
   ```
   @Bean
