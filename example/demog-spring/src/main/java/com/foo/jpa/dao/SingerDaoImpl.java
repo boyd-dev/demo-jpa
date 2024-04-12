@@ -59,10 +59,6 @@ public class SingerDaoImpl implements SingerDao {
 
 	@Override
 	public Singer update(Singer singer) {		
-//		if (!Objects.isNull(singer.getId())) {
-//			return em.merge(singer);
-//		}
-//		return null;
 		return em.merge(singer);
 	}
 
@@ -72,12 +68,8 @@ public class SingerDaoImpl implements SingerDao {
 	}
 
 	@Override
-	public RecordLabel insert(RecordLabel recordLabel) {
-		
-		if (Objects.isNull(findRecordLabel(recordLabel))) {
-			em.persist(recordLabel);
-		}
-		
+	public RecordLabel insert(RecordLabel recordLabel) {		
+		em.persist(recordLabel);
 		return recordLabel;
 	}		
 
