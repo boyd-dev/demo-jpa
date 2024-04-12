@@ -139,6 +139,22 @@ public class PhoneDetail
 private Phone phone;
 ```
 
+단방향을 유지하면서 detail에 FK를 두려면 PK공유방식을 사용할 수도 있습니다. 아래와 같이 `@MapsId` 어노테이션을 사용합니다. 이렇게 하면 master의 PK를 detail의 PK로 사용하면서 둘은 FK 관계를 가지게 됩니다. 원래 있던 `@Id`에서 `@GeneratedValue`은 삭제합니다.
+
+```
+@Entity
+public class PhoneDetail
+
+@Id
+private Long id;
+
+@OneToOne
+@MapsId
+@JoinColumn(name = "id")
+private Person person;
+
+```
+
 ## @ManyToMany
 예제 데이터 모델에서 Singer와 RecordLabel은 다대다 관계입니다. 다대다 관계는 단방향이든 양방향이든 모두 중간 테이블 `singer_record_label`이 생성됩니다. 중간 테이블은 Singer와 RecordLabel의 각 PK들과 FK 관계를 맺고 있습니다. 아래는 양방향 설정을 했을 때 중간 테이블 두 개 컬럼의 FK 제약조건입니다.
 
