@@ -274,9 +274,9 @@ Singer를 조회한 후에 `recordLabels`에서 해당 레코드사를 삭제한
 
 ```
 @Test
-	@DisplayName("delete RecordLabel by Singer")
-	@Order(5)
-	void deleteRecordLabelbySinger() {
+@DisplayName("delete RecordLabel by Singer")
+@Order(5)
+void deleteRecordLabelbySinger() {
 		 
 	Singer singer = service.findByIdWithRecordLabels(Long.parseLong("3"));
 		 
