@@ -12,7 +12,7 @@
 - Hibernate 5.3.36.Final
 - MySQL 8.0
 - Junit 5.9.3
-- Gradle 8.7
+- Gradle 8.4
 - IDE - STS 4.20.1
 
 목차
