@@ -29,7 +29,7 @@ public abstract class BaseEntity {
 
 }
 ```
-엔티티의 속성은 테이블의 컬럼에 해당합니다. 테이블은 PK가 있는데 엔티티에서는 `@Id`로 PK 컬럼에 해당하는 속성을 지정합니다. 모든 엔티티는 반드시 `@Id`를 가져야 합니다. `@GeneratedValue(strategy = GenerationType.IDENTITY)`은 자동증가 컬럼을 의미합니다.
+엔티티의 속성은 테이블의 컬럼에 해당합니다. 테이블은 PK가 있는데 엔티티에서는 `@Id`로 PK 컬럼에 해당하는 속성을 지정합니다. 모든 엔티티는 반드시 `@Id`를 가져야 합니다. `@GeneratedValue(strategy = GenerationType.IDENTITY)`은 자동증가 컬럼을 의미하는데 신규 건을 등록할 때 자동으로 PK를 생성해주기 위함입니다. 일련번호로 들어가는 것을 원하지 않으면 UUID를 사용하거나 `@TableGenerator`을 사용하여 별도의 채번 테이블을 이용할 수도 있습니다.
 
 엔티티 이름에 대응되는 테이블 이름을 `name` 속성으로 명시적으로 지정할 수 있습니다. 이것을 생략하는 경우는 디폴트 네이밍 전략 `ImplicitNamingStrategyJpaCompliantImpl`이 적용됩니다. 보통 엔티티 이름과 동일하게 소문자로 테이블이 생성됩니다.
 
