@@ -27,4 +27,5 @@
 8. [스프링 데이터 JPA](08/README.md)
 
 참고  
-[Hibernate User Guide](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html)
+[Hibernate User Guide](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html)  
+[Spring Data JPA](https://docs.spring.io/spring-data/jpa/docs/2.7.x/reference/html/)
