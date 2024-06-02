@@ -129,7 +129,7 @@ public interface SingerAlbums {
 ```
 인터페이스의 getter가 모두 "aggregate root" 엔티티의 속성과 일치하면 이것을 "닫힌(closed)" 프로젝션이라고 합니다. 
 
-클래스 기반의 프로젝션은 "DTO 프로젝션"이라고도 말합니다. 인터페이스 대신 POJO 형태의 DTO를 사용합니다. 앞서 `SingerAlbums` 인터페이스는 다음과 같은 클래스로 대체할 수 있습니다.  
+인터페이스 대신 POJO 형태의 클래스로 프로젝션을 만들 수도 있습니다. 이것을 "DTO 프로젝션"이라고 합니다.  앞서 `SingerAlbums` 인터페이스는 다음과 같은 DTO 클래스로 대체할 수 있습니다.  
 
 ```
 public class SingerAlbums {
@@ -164,7 +164,9 @@ public class SingerAlbums {
 			+ "FROM Singer s JOIN s.albums a WHERE s.id = :singerId")
 	public List<SingerAlbums> fetchSingerAlbumsById(@Param("singerId") Long id);
 ```
-생성자 표현식을 사용하기 때문 native query에서는 사용할 수 없다는 단점이 있습니다. 프로젝션 인터페이스나 DTO 없이 간단하게 `Tuple`을 이용하는 방법도 있습니다. 
+생성자 표현식을 사용하기 때문 native query에서는 사용할 수 없다는 단점이 있습니다.  
+
+프로젝션 인터페이스까지 만들 필요가 없다 하면 DTO 없이 간단하게 `Tuple`을 이용하는 방법도 있습니다. 
 
 ```
 @Query(value = "SELECT s.firstName as firstName, s.lastName as lastName, a.title as title "
