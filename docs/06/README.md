@@ -5,10 +5,10 @@
 
 앞서 정의한 엔티티들에 연관 관계를 설정하려면 각 관계의 종류에 따라 어노테이션을 추가해야 합니다. 네 가지 어노테이션이 있습니다.
 
-- @ManyToOne
-- @OneToMany
-- @OneToOne
-- @ManyToMany
+- ManyToOne
+- OneToMany
+- OneToOne
+- ManyToMany
 
 엔티티들 사이의 관계는 해당 엔티티를 속성에 포함시키고 그 속성에 위 어노테이션 중 하나를 적용하는 형식으로 이루어집니다. 연관 관계의 설명은 다소 복잡하기 하기 때문에 하이버네이트 [사용자 가이드](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#associations)를 중심으로 정리하겠습니다. 
 
@@ -184,11 +184,11 @@ private List<Singer> singers = new ArrayList<>();
 
 이제까지 살펴 본 연관 관계를 정리하면: 네 개의 관계에 대해서 단방향 양방향을 생각하면 8개의 조합이지만 `@OneToMany`와 `@ManyToOne`의 양방향은 한 가지이고 단방향 `@OneToMany`는 매우 비효율적이므로 제외하며, 또 `@ManyToMany`는 양방향 밖에 없기 때문에 사실상 의미있는 관계는 다섯 가지로 생각할 수 있습니다.
 
-- 단방향 `@ManyToOne`
-- 양방향 `@OneToMany` + `@ManyToOne`
-- 단방향 `@OneToOne`
-- 양방향 `@OneToOne`
-- 양방향 `@ManyToMany`
+- 단방향 ManyToOne
+- 양방향 OneToMany(+ManyToOne)
+- 단방향 OneToOne
+- 양방향 OneToOne
+- 양방향 ManyToMany
 
 
 [처음](../README.md) | [다음](../07/README.md)
