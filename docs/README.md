@@ -25,7 +25,7 @@
 6. [연관 관계](06/README.md)
 7. [CRUD 테스트](07/README.md)
 8. [스프링 데이터 JPA](08/README.md)
-8. [JPA Repository](09/README.md)
+9. [JPA Repository](09/README.md)
 
 참고  
 [Hibernate User Guide](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html)  
