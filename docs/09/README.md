@@ -10,9 +10,9 @@ public interface SingerRepository extends JpaRepository<Singer, Long> {
 }
 ```
 
-`Singer`에 대해 `public List<Singer> findAll()`이나 `public Optional<Singer> findById(Long singerId)`등의 메소드들이 제공됩니다. 특별히 오버라이드할 일이 없다면 그대로 사용하면 되고, 내부적으로 실제 구현체인 [`SimpleJpaRepository`](https://docs.spring.io/spring-data/jpa/docs/2.7.9/api/org/springframework/data/jpa/repository/support/SimpleJpaRepository.html)의 메소드로 자동으로 라우트됩니다.
+`Singer`에 대해 `public List<Singer> findAll()`이나 `public Optional<Singer> findById(Long singerId)`등의 조회 메소드들과 `delete`, `save` 등이 제공됩니다. 특별히 오버라이드할 일이 없다면 그대로 사용하면 되고, 내부적으로 실제 구현체인 [`SimpleJpaRepository`](https://docs.spring.io/spring-data/jpa/docs/2.7.9/api/org/springframework/data/jpa/repository/support/SimpleJpaRepository.html)의 메소드로 자동으로 라우트됩니다.
 
-`JpaRepository`에서 제공되지 않는 query는 다양한 방법으로 추가할 수 있습니다. 그중에 하나는 정해진 규칙에 의해 메소드 이름으로부터 query를 자동 생성하는 기능입니다. 정해진 규칙이란 메소드 이름의 형식입니다. 메소드 이름을 크게 두 개 부분으로 나누어 query를 생성합니다. 예를 들어 다음과 같은 메소드를 선언하면
+`JpaRepository`에서 제공되지 않는 query는 다양한 방법으로 추가할 수 있습니다. 그중에 하나는 정해진 규칙에 의해 메소드 이름으로부터 query를 자동 생성하는 "query builder" 기능입니다. 정해진 규칙이란 메소드 이름의 형식입니다. 메소드 이름을 크게 두 개 부분으로 나누어 query를 생성합니다. 예를 들어 다음과 같은 메소드를 선언하면
 
 ```
  public List<Singer> findByFirstNameAndLastName(String first, String last); 
@@ -195,7 +195,7 @@ public class SingerAlbums {
 ```
 생성자 표현식을 사용하기 때문 native query에서는 사용할 수 없다는 단점이 있습니다.  
 
-프로젝션 인터페이스까지 만들 필요가 없다 하면 DTO 없이 간단하게 `Tuple`을 이용하는 방법도 있습니다. 
+프로젝션 인터페이스나 클래스까지 만들 필요가 없다고 하면 `Tuple`을 이용하는 방법도 있습니다. 
 
 ```
 @Query(value = "SELECT s.firstName as firstName, s.lastName as lastName, a.title as title "
