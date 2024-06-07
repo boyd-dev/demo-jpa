@@ -74,15 +74,44 @@ public List<RecordLabel> findRecordLabel(String label) {
 }
 ```
 
+`JpaRepository`에서 사용하려면 Named Query의 이름의 형식을 `{Entity Name}.{Method Name}` 으로 해야 합니다.
+
+```
+// Named Query
+@Entity(name = "Singer")
+@Table(name = "singer")
+@NamedQueries(
+		{
+			@NamedQuery(
+				name = "Singer.Find_Singer",
+				query = "from Singer s where s.id = :singerId"
+			)
+		}
+)
+...
+
+// Repository
+public interface SingerRepository extends JpaRepository<Singer, Long> {
+	
+	public Singer Find_Singer(@Param("singerId") Long id);
+}
+
+```
+
+
 ## Projection
 
 스프링 데이터 JPA에서 프로젝션(Projection)은 다음과 같이 설명되어 있습니다.
 
 >Spring Data query methods usually return one or multiple instances of the aggregate root managed by the repository. However, it might sometimes be desirable to create projections based on certain attributes of those types. Spring Data allows modeling dedicated return types, to more selectively retrieve partial views of the managed aggregates.
 
-간단히 말하면 필요한 속성들만으로 결과셋을 만드는 것을 의미합니다. 스프링 데이터 JPA를 사용하지 않는 경우는 EntityManager의 `createQuery`를 사용하면 `getResultList`나 `getSingleResult`를 사용할 수 있지만 필요한 속성만을 선택적으로 받게 되므로 결과 타입을 직접 명시하기 어렵습니다(단순히 `Object[]`로 받는 것을 스칼라 프로젝션이라고 합니다).  
+간단히 말하면 필요한 속성들만으로 결과셋을 만드는 것을 의미합니다. 스프링 데이터 JPA를 사용하지 않는 경우는 EntityManager의 `createQuery`를 사용하면 `getResultList`나 `getSingleResult`를 사용할 수 있지만 필요한 속성만을 선택적으로 받게 되므로 결과 타입을 직접 명시하기 어렵습니다.  
 
-인터페이스를 이용하는 프로젝션은 필요한 컬럼으로 인터페이스 타입을 정의합니다. 예를 들어 `Singer`의 모든 컬럼을 조회하지 않고 `firstName`과 `lastName`만을 가진 결과 타입을 리턴받기 위해서는 아래와 같은 인터페이스를 작성합니다.
+하지만 읽기 전용으로 어떤 결과셋이 필요하다면 persistence context의 리소스를 절약하고 성능을 높이기 위해 프로젝션을 적극적으로 사용할 필요가 있습니다(왜냐하면 프로젝션은 컨텍스트 관리를 하지 않기 때문에).
+
+>For read-only transactions, you should fetch DTO projections because they allow you to select just as many columns as you need to fulfill a certain business use case. This has many benefits like reducing the load on the currently running Persistence Context because DTO projections don’t need to be managed.
+
+우선 인터페이스를 이용하는 방법입니다. 이것은 필요한 컬럼으로 인터페이스 타입을 정의합니다. 예를 들어 `Singer`의 모든 컬럼을 조회하지 않고 `firstName`과 `lastName`만을 가진 결과 타입을 리턴받기 위해서는 아래와 같은 인터페이스를 작성합니다.
 
 ```
 public interface SingerName {	
