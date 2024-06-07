@@ -89,7 +89,7 @@ Singer와 Album의 양방향은 Singer에 `mappedBy`로 child의 속성명을 �
 
 >Every bidirectional association must have one owning side only (the child side), the other one being referred to as the inverse (or the mappedBy) side.
 
-위의 설명에서 "owning side"는 흔히 말하는 연관 관계의 주인이라고 표현을 하지만 사실은 <b>FK를 소유</b>하는 엔티티를 의미합니다. 반면 "inverse side"는 `mappedBy`로 참조하는 쪽을 말합니다. 양방향 `@OneToMany`에서 Album이 owning side이고 Singer가 inverse side가 되겠습니다.
+위의 설명에서 "owning side"는 흔히 말하는 연관 관계의 주인이라고 표현을 하지만 사실은 <b>FK를 소유</b>하는 엔티티를 의미합니다. 반면 "inverse side"는 `mappedBy`로 참조하는 쪽을 말합니다. 양방향 OneToMany에서 Album이 owning side이고 Singer가 inverse side가 되겠습니다. 양방향 OneToMany에서 many 쪽에는 `mappedBy`가 설정될 수 없다는 규칙이 있습니다. 따라서 OneToMany과 ManyToOne의 양방향은 위의 경우 한 가지 밖에 없습니다.
 
 당연한 말이지만 단방향의 경우 "owning side"만을 가지게 되고 양방향은 "owning side"와 "inverse side"를 가지게 됩니다.  "owning side"는 연관 관계를 기반으로 어떻게 데이터를 변경할 지를 결정하는 기준이 됩니다. [Java EE 7 Persistence](https://docs.oracle.com/javaee/7/tutorial/partpersist.htm#BNBPY) 설명을 인용해보겠습니다. 
 
