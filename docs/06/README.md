@@ -48,7 +48,7 @@ private Set<Album> albums = new HashSet<>();
 
 >When using a unidirectional @OneToMany association, Hibernate resorts to using a link table between the two joining entities.
 
-중간 테이블을 생성시키지 않고 FK만 맺으려면 아래와 같이 `@JoinColumn`을 사용할 수 있습니다.
+중간 테이블을 생성시키지 않고 FK만 맺으려면 아래와 같이 `@JoinColumn`을 사용할 수 있습니다. 이렇게 하면 <b>`Album`에 FK가 생깁니다.</b> 
 ```
 @Entity
 public class Singer 
@@ -57,6 +57,7 @@ public class Singer
 @JoinColumn(name = "singer_id")
 private Set<Album> albums = new HashSet<>();
 ```
+
 일반적으로 단방향 OneToMany는 부가적인 쿼리를 많이 수행하기 때문에 권장하지 않습니다. 단방향 OneToMany는 가능하면 피하고 ManyToOne의 관계로(어차피 관계 자체는 달라지지 않으므로) 변경하고 parent에서 child를 가져올 때는 쿼리를 직접 작성해서 해결하는 방안을 생각할 수 있습니다.  
 
 하이버네이트 가이드에서는 차라리 양방향 OneToMany를 설정하는 것이 바람직하다고 설명합니다.
