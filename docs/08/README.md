@@ -47,8 +47,7 @@ public interface SingerRepository extends JpaRepository<Singer, Long> {
 	
 }
 ```
-읽기 메소드만 정의한 것 같지만 사실 `persist`와 `remove`는 내부적으로 포함되어 있습니다. 서비스 클래스에서는 아래와 같이 사용합니다.
-
+읽기 메소드만 정의한 것 같지만 `persist`와 `remove`는 내부적으로 포함되어 있습니다. 서비스 클래스에서는 아래와 같이 사용합니다(사실 `findAll`와 `findById` 같은 기본 메소드들도 다시 정의할 필요가 없습니다).
 ```
 @Service("singerService")
 @Transactional
@@ -79,7 +78,7 @@ public class SingerServiceImpl implements SingerService {
 }
 ```
 
-이렇게 `SingerDao` 대신 `SingerRepository`로 바꾸면 됩니다. 물론 서비스 인터페이스 변경없이 구현 클래스만 변경하거나 새로 하나 만들어서 교체하면 될 것입니다. `JpaRepository` 인터페이스는 엔티티 타입 파라미터를 하나 받기 때문에 엔티티 단위로 `JpaRepository`를 만들어야 합니다.
+이렇게 `SingerDao` 대신 `SingerRepository`로 바꾸면 됩니다. 물론 서비스 인터페이스 변경없이 구현 클래스만 변경하거나 새로 만들어서 교체하면 되겠습니다. `JpaRepository` 인터페이스는 엔티티 타입 파라미터를 하나 받기 때문에 엔티티 단위로 `JpaRepository`를 만들어야 합니다.
 
 이것 외에도 스프링 데이터 JPA는 스프링에서 JPA를 보다 수월하게(?) 사용할 수 있는 여러가지 기능을 제공합니다. 자세한 내용은 [공식문서](https://docs.spring.io/spring-data/jpa/docs/2.7.x/reference/html/)를 참고하세요.
 
