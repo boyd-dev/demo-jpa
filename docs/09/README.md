@@ -193,7 +193,7 @@ public class SingerAlbums {
 			+ "FROM Singer s JOIN s.albums a WHERE s.id = :singerId")
 	public List<SingerAlbums> fetchSingerAlbumsById(@Param("singerId") Long id);
 ```
-생성자 표현식을 사용하기 때문 native query에서는 사용할 수 없다는 단점이 있습니다.  
+생성자 표현식을 사용하기 때문에 native query에서는 사용할 수 없다는 단점이 있습니다.  
 
 프로젝션 인터페이스나 클래스까지 만들 필요가 없다고 하면 `Tuple`을 이용하는 방법도 있습니다. 
 
