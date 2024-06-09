@@ -383,14 +383,14 @@ columns = {@ColumnResult(name="first_name", type = String.class), @ColumnResult(
 
 ```
 @SqlResultSetMapping(name = "SingerAlbumsMapping",
-			classes = @ConstructorResult(
-			                targetClass = SingerAlbumsDto.class,
-			        	    columns = {
-					            @ColumnResult(name="firstName"), 
-					            @ColumnResult(name="lastName"),
-					            @ColumnResult(name="title")
-							}			
-			)
+	classes = @ConstructorResult(
+		targetClass = SingerAlbumsDto.class,
+		columns = {
+			@ColumnResult(name="firstName"), 
+			@ColumnResult(name="lastName"),
+			@ColumnResult(name="title")
+		}
+	)
 )
 ```
 `SingerAlbumsDto`는 조회 컬럼들에 대응되는 속성들을 차례대로 입력받는 생성자를 가진 클래스입니다.
