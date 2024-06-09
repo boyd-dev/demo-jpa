@@ -292,7 +292,7 @@ void deleteRecordLabelbySinger() {
 
 클래스는 보통 `Object`를 상속받기 때문에 재정의하지 않는 한 `hashCode`와 `equals` 메소드를 그대로 사용하게 됩니다. 서로 다른 객체를 생성하면 속성 값들이 일치해도 `hashCode`와 `equals`는 일치하지 않습니다(`hashCode` 값이 다르고 `equals`도 false). 하이버네이트에서는 이러한 상황이 잘 맞지 않을 수 있는데, 왜냐하면 데이터베이스에서 조회한 동일한 엔티티가 캐시에 여러 개 존재하는 것은 비효율적일 뿐만 아니라 그럴 이유도 없기 때문입니다. 
 
-특히 `Set`과 자바 컬렉션을 사용하는 경우는 목적에 맞게 `hashCode`와 `equals` 메소드를 오버라이드할 필요가 있습니다. 그런데 엔티티의 `id` 속성을 `hashCode`와 `equals`에 이용할 때 주의해야 합니다. 왜냐하면 만약 `Set`에 데이터를 추가하는 경우 신규 등록일 때는(transient) `id`가 null이 되므로 두 객체를 비교할 때 `equals`는 false가 됩니다. 그렇게 되면 실제로는 엔티티가 동일하다고 생각해도 `Set`에는 중복으로 들어갈 수 있습니다.  
+특히 `Set`과 같은 자바 컬렉션을 사용하는 경우는 목적에 맞게 `hashCode`와 `equals` 메소드를 오버라이드할 필요가 있습니다. 그런데 엔티티의 `id` 속성을 `hashCode`와 `equals`에 이용할 때 주의해야 합니다. 왜냐하면 만약 `Set`에 데이터를 추가하는 경우 신규 등록일 때는(transient) `id`가 null이 되므로 두 객체를 비교할 때 `equals`는 false가 됩니다. 그렇게 되면 실제로는 엔티티가 동일하다고 생각해도 `Set`에는 중복으로 들어갈 수 있습니다.  
 
 하이버네이트 공식 [문서](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#mapping-model-pojo-equalshashcode)에서는 
 `hashCode`와 `equals`를 오버라이드할 때 비즈니스 로직상 의미있는 값 "natural id"을 이용하여 동등성을 판단할 것을 조언하고 있습니다.  
@@ -334,7 +334,7 @@ List<RecordLabel> result = nq.getResultList();
 네임드 쿼리는 "네이티브(native)" SQL로 작성할 수도 있는데 이때는 `@NamedNativeQuery` 어노테이션을 사용합니다.
 
 ## NativeQuery
-엔티티의 일부 컬럼이나 조인으로 조회하는 데이터는 컬럼 값들을 가져오는 스칼라 쿼리입니다. 이때는 엔티티를 그대로 가져오기 보다는 [프로젝션](https://github.com/boyd-dev/demo-jpa/blob/main/docs/09/README.md#projection)이나 데이터베이스에 종속적인 네이티브 쿼리를 이용할 때가 많습니다. 여기서는 `@NamedNativeQuery`를 사용하고 그 결과셋을 매핑해주는 방법에 대해 알아보겠습니다.  
+엔티티의 일부 컬럼이나 조인으로 조회하는 데이터는 컬럼 값들을 가져오는 스칼라 쿼리입니다. 이때는 엔티티 단위로 가져오기 보다는 [프로젝션](https://github.com/boyd-dev/demo-jpa/blob/main/docs/09/README.md#projection)이나 데이터베이스에 종속적인 네이티브 쿼리를 이용할 때가 많습니다. 여기서는 `@NamedNativeQuery`를 사용하고 그 결과셋을 매핑해주는 방법에 대해 알아보겠습니다.  
 
 아래와 같은 네임드 네이티브 쿼리가 있다고 생각해보겠습니다. 
 
@@ -344,16 +344,16 @@ List<RecordLabel> result = nq.getResultList();
 			@NamedNativeQuery(
 				name = "Singer.Find_Singer_Native",
 				query = "select first_name, last_name from singer where id = ?1",
-				resultSetMapping = "singerNameMapping"
+				resultSetMapping = "SingerNameMapping"
 			)
 		}		
 )
 ```
 `resultSetMapping` 속성은 결과셋의 매핑입니다. 네이티브 쿼리 결과셋의 타입은 포괄적인 타입인 `List<Object[]>`이 되는데 이때 컬럼 값을 `Object[]` 배열에 매핑해주게 됩니다. 
-따라서 `singerNameMapping`은 아래와 같이 `@SqlResultSetMapping` 어노테이션을 사용하여 정의할 수 있습니다. 
+따라서 `SingerNameMapping`은 아래와 같이 `@SqlResultSetMapping` 어노테이션을 사용하여 정의할 수 있습니다. 
 
 ```
-@SqlResultSetMapping(name = "singerNameMapping", 
+@SqlResultSetMapping(name = "SingerNameMapping", 
                     columns = {@ColumnResult(name="first_name"), @ColumnResult(name="last_name")})
 ```
 
@@ -386,10 +386,10 @@ columns = {@ColumnResult(name="first_name", type = String.class), @ColumnResult(
 			classes = @ConstructorResult(
 			                targetClass = SingerAlbumsDto.class,
 			        	    columns = {
-					               @ColumnResult(name="firstName"), 
-					               @ColumnResult(name="lastName"),
-					               @ColumnResult(name="title")
-			                }				
+					            @ColumnResult(name="firstName"), 
+					            @ColumnResult(name="lastName"),
+					            @ColumnResult(name="title")
+							}			
 			)
 )
 ```
