@@ -294,7 +294,7 @@ void deleteRecordLabelbySinger() {
 
 보통 트랜잭션은 서비스 메소드 단위로 적용합니다. 다시 말해서 `@Transactional`은 서비스 클래스의 메소드 단위로 적용하는 경우가 대부분 입니다. `EntityManager`가 동작하려면 반드시 트랜잭션이 시작되어야 하는데 이 말은 결국 persistence context가 트랜잭션 단위라는 의미입니다. 이것을 "Transaction-scoped persistence context"라고 표현합니다(하이버네이트에서는 "Session-per-request pattern"이라고 합니다). 서비스 메소드가 리턴되면 트랜잭션이 종료되고 persistence context에 있던 모든 "managed" 엔티티들은 "flush"되고 커밋됩니다. 그리고 `EntityManager`는 종료됩니다.  
 
-따라서 persistence context의 엔티티들이 공유되기 위해서는 단일 트랜잭션, 즉 하나의 서비스 메소드 내에서 CRUD가 이루어져야 하며 다른 서비스 메소드 호출시 트랜잭션 전파가 이어지면 persistence context 역시 지속됩니다. 동일한 엔티티를 조회하면 persistence context에 존재하는 엔티티를 계속 참조합니다. 하지만 `Propagation.REQUIRES_NEW`처럼 새로운 트랜잭션에서 조회한 엔티티는 다른 엔티티가 됩니다. 여기서 유념할 것은 persistence context 내에서 한번 엔티티를 가져온 후 다시 JPQL로 조회하더라도 query는 실행되지만 해당 엔티티가 이미 있으므로 그것을 반환한다는 점입니다. 즉 다른 트랜잭션에 의해 그 엔티티의 속성이 업데이트 되더라도 "repeatable read"처럼 변경 전 엔티티를 리턴한다는 말이 되겠습니다.
+따라서 persistence context의 엔티티들이 공유되기 위해서는 단일 트랜잭션, 즉 하나의 서비스 메소드 내에서 CRUD가 이루어져야 하며 다른 서비스 메소드 호출시 트랜잭션 전파가 이어지면 persistence context 역시 지속됩니다. 동일한 엔티티를 조회하면 persistence context에 존재하는 엔티티를 계속 참조합니다. 하지만 `Propagation.REQUIRES_NEW`처럼 새로운 트랜잭션에서 조회한 엔티티는 다른 엔티티가 됩니다. 여기서 유념할 것은 persistence context 내에서 한번 엔티티를 가져온 후 다시 JPQL로 조회하더라도 실행되지만 해당 엔티티가 이미 있으므로 그것을 반환한다는 점입니다. 즉 다른 트랜잭션에 의해 그 엔티티의 속성이 업데이트 되더라도 "repeatable read"처럼 변경 전 엔티티를 리턴한다는 말이 되겠습니다.
 
 ## NamedQuery
 네임드 쿼리는 마치 JDBC의 `PreparedStatement`처럼 사전에 정의된 쿼리문입니다. 보통 직접 쿼리를 작성하려면 DAO 클래스에서 EntityManager의 `createQuery`를 사용할 수 있는데, 네임드 쿼리를 사용하면 쿼리 문자열을 DAO 클래스(또는 레포지토리)로부터 분리하여 쿼리 구성을 중앙화할 수 있습니다(물론 분리할 필요가 없다고 생각할 수도 있습니다). 예를 들어 네임드 쿼리를 별도의 파일, META-INF/orm.xml이나 jpa-named-queries.properties 파일로 분리할 수 있습니다.  
