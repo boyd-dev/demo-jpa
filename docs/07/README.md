@@ -218,7 +218,7 @@ public RecordLabel findRecordLabel(RecordLabel recordLabel) {
 			.getResultStream().findFirst().orElse(null);
 }
 ```
-여기서 `em.createNamedQuery`를 사용했습니다. 이것은 미리 정해진 쿼리를 만들어놓고 필요할 때 실행할 수 있습니다. `@NamedQuery` 쿼리는 `RecordLabel` 엔티티에 두기로 합니다. 여기에 사용된 쿼리는 SQL이 아니라 JPQL입니다. SQL과 유사하므로 의미를 해석하는 것에 큰 어려움은 없을 것 같습니다. `join fetch`는 연관된 객체를 가져오는 구문입니다.
+여기서 `em.createNamedQuery`를 사용했습니다. 이것은 미리 정해진 쿼리를 만들어놓고 필요할 때 실행할 수 있습니다. `@NamedQuery` 쿼리는 `RecordLabel` 엔티티에 두기로 합니다. 여기에 사용된 쿼리는 SQL이 아니라 JPQL입니다. `join fetch`는 연관된 컬렉션 객체를 가져올 때 사용하는 구문입니다.
 
 ```
 @Entity(name = "RecordLabel")
@@ -227,7 +227,7 @@ public RecordLabel findRecordLabel(RecordLabel recordLabel) {
 	{
 		@NamedQuery(
 			name = "RecordLabel.Find_RecordLabel_With_Singer",
-			query = "select r from RecordLabel r left join fetch r.singers s where r.label = ?0"
+			query = "select r from RecordLabel r left join fetch r.singers s where r.label = ?1"
 		)
 	}
 )
@@ -236,7 +236,7 @@ public class RecordLabel extends BaseEntity implements Serializable {
 }
 
 ```
-`label`에 해당하는 조건은 변하는 것이므로 외부 파라미터로 받기 위해 순서대로 입력받는 `?0`을 사용했습니다. 이것은 이름을 지정하는 파라미터 `:label`으로 써도 되겠습니다.
+`label`에 해당하는 조건은 변하는 것이므로 외부 파라미터로 받기 위해 순서대로 입력받는 `?1`을 사용했습니다. 이것은 이름을 지정하는 파라미터 `:label`으로 써도 되겠습니다.
 
 테스트 케이스는 아래와 같이 작성할 수 있습니다. 1번 Singer의 레코드사에 Columbia Records를 추가합니다.
 
@@ -288,6 +288,135 @@ void deleteRecordLabelbySinger() {
 	assertTrue(result);		 		
 }
 ```
-이때 `label` 속성 값이 같은 것을 동일한 레코드사로 보고 Set에서 삭제시킬 것이므로 이를 위해 `RecordLabel` 클래스에 `hashCode`와 `equals` 메소드를 오버라이드할 필요가 있습니다.
+이때 `label` 속성 값이 같은 것을 동일한 레코드사로 보고 컬렉션에서 삭제시킬 것이므로 이를 위해 `RecordLabel` 클래스에 `hashCode`와 `equals` 메소드를 오버라이드할 필요가 있습니다.
+
+## 트랜잭션 기반의 persistence context
+
+보통 트랜잭션은 서비스 메소드 단위로 적용합니다. 다시 말해서 `@Transactional`은 서비스 클래스의 메소드 단위로 적용하는 경우가 대부분 입니다. `EntityManager`가 동작하려면 반드시 트랜잭션이 시작되어야 하는데 이 말은 결국 persistence context가 트랜잭션 단위라는 의미입니다. 이것을 "Transaction-scoped persistence context"라고 표현합니다(하이버네이트에서는 "Session-per-request pattern"이라고 합니다). 서비스 메소드가 리턴되면 트랜잭션이 종료되고 persistence context에 있던 모든 "managed" 엔티티들은 "flush"되고 커밋됩니다. 그리고 `EntityManager`는 종료됩니다.  
+
+따라서 persistence context의 엔티티들이 공유되기 위해서는 단일 트랜잭션, 즉 하나의 서비스 메소드 내에서 CRUD가 이루어져야 하며 다른 서비스 메소드 호출시 트랜잭션 전파가 이어지면 persistence context 역시 지속됩니다. 동일한 엔티티를 조회하면 persistence context에 존재하는 엔티티를 계속 참조합니다. 하지만 `Propagation.REQUIRES_NEW`처럼 새로운 트랜잭션에서 조회한 엔티티는 다른 엔티티가 됩니다. 여기서 유념할 것은 persistence context 내에서 한번 엔티티를 가져온 후 다시 JPQL로 조회하더라도 query는 실행되지만 해당 엔티티가 이미 있으므로 그것을 반환한다는 점입니다. 즉 다른 트랜잭션에 의해 그 엔티티의 속성이 업데이트 되더라도 "repeatable read"처럼 변경 전 엔티티를 리턴한다는 말이 되겠습니다.
+
+## NamedQuery
+네임드 쿼리는 마치 JDBC의 `PreparedStatement`처럼 사전에 정의된 쿼리문입니다. 보통 직접 쿼리를 작성하려면 DAO 클래스에서 EntityManager의 `createQuery`를 사용할 수 있는데, 네임드 쿼리를 사용하면 쿼리 문자열을 DAO 클래스(또는 레포지토리)로부터 분리하여 쿼리 구성을 중앙화할 수 있습니다(물론 분리할 필요가 없다고 생각할 수도 있습니다). 예를 들어 네임드 쿼리를 별도의 파일, META-INF/orm.xml이나 jpa-named-queries.properties 파일로 분리할 수 있습니다.  
+
+여기서는 `@NamedQuery` 어노테이션을 사용하여 관련된 엔티티 클래스에 정의하는 방법을 살펴보겠습니다(이미 앞에서 사용한 적이 있습니다). 
+
+```
+@Entity(name = "RecordLabel")
+@Table(name = "record_label")
+@NamedQueries(
+	{
+		@NamedQuery(
+			name = "RecordLabel.Find_RecordLabel_With_Singer",
+			query = "select r from RecordLabel r left join fetch r.singers s where r.label = ?1"
+		)
+	}
+)
+public class RecordLabel extends BaseEntity implements Serializable {
+...
+}
+```
+`@NamedQuery`의 `name` 속성의 이름은 임의로 줄 수 있지만 스프링 데이터 JPA에서 이름을 메소드명 그대로 사용하려면 `{Entity Name}.{Method Name}` 형식을 지켜야 합니다. 이렇게 정의된 네임드 쿼리는 다음과 같이 참조하면 되겠습니다. 
+
+```
+TypedQuery nq = em.createNamedQuery("RecordLabel.Find_RecordLabel_With_Singer", RecordLabel.class);
+nq.setParameter(1, "Columbia Records");
+List<RecordLabel> result = nq.getResultList();
+```
+네임드 쿼리는 "네이티브(native)" SQL로 작성할 수도 있는데 이때는 `@NamedNativeQuery` 어노테이션을 사용합니다.
+
+## NativeQuery
+엔티티의 일부 컬럼이나 조인으로 조회하는 데이터는 컬럼 값들을 가져오는 스칼라 쿼리입니다. 이때는 엔티티를 그대로 가져오기 보다는 [프로젝션](https://github.com/boyd-dev/demo-jpa/blob/main/docs/09/README.md#projection)이나 데이터베이스에 종속적인 네이티브 쿼리를 이용할 때가 많습니다. 여기서는 `@NamedNativeQuery`를 사용하고 그 결과셋을 매핑해주는 방법에 대해 알아보겠습니다.  
+
+아래와 같은 네임드 네이티브 쿼리가 있다고 생각해보겠습니다. 
+
+```
+@NamedNativeQueries(
+		{
+			@NamedNativeQuery(
+				name = "Singer.Find_Singer_Native",
+				query = "select first_name, last_name from singer where id = ?1",
+				resultSetMapping = "singerNameMapping"
+			)
+		}		
+)
+```
+`resultSetMapping` 속성은 결과셋의 매핑입니다. 네이티브 쿼리 결과셋의 타입은 포괄적인 타입인 `List<Object[]>`이 되는데 이때 컬럼 값을 `Object[]` 배열에 매핑해주게 됩니다. 
+따라서 `singerNameMapping`은 아래와 같이 `@SqlResultSetMapping` 어노테이션을 사용하여 정의할 수 있습니다. 
+
+```
+@SqlResultSetMapping(name = "singerNameMapping", 
+                    columns = {@ColumnResult(name="first_name"), @ColumnResult(name="last_name")})
+```
+
+조회된 각 컬럼 값을 매핑해주는 것은 `@ColumnResult`입니다. 컬럼 값들의 타입을 지정해서 좀더 명확한 매핑을 할 수도 있습니다.
+
+```
+columns = {@ColumnResult(name="first_name", type = String.class), @ColumnResult(name="last_name", type = String.class)}
+```
+위와 같이 각 컬럼들의 매핑을 해줄 수도 있지만 아예 하나의 DTO를 지정할 수도 있습니다. 이 경우는  `@SqlResultSetMapping`에서 `classes` 속성을 지정합니다. `Singer`와 `Album`을 
+조인한 결과를 `SingerAlbumsDto` 타입에 담는 것을 예로 보겠습니다.
+
+```
+@NamedNativeQueries(
+		{
+			...
+			@NamedNativeQuery(
+				name = "Singer.Find_Singer_Albums",
+				query = "select s.first_name as firstName, s.last_name as lastName, a.title as title "
+						+ "from singer s join album a on a.singer_id = s.id where s.id = ?1",
+				resultSetMapping = "SingerAlbumsMapping"
+			)	
+		}
+		
+)
+```
+`SingerAlbumsMapping`은 아래와 같이 정의합니다.
+
+```
+@SqlResultSetMapping(name = "SingerAlbumsMapping",
+			classes = @ConstructorResult(
+			                targetClass = SingerAlbumsDto.class,
+			        	    columns = {
+					               @ColumnResult(name="firstName"), 
+					               @ColumnResult(name="lastName"),
+					               @ColumnResult(name="title")
+			                }				
+			)
+)
+```
+`SingerAlbumsDto`는 조회 컬럼들에 대응되는 속성들을 차례대로 입력받는 생성자를 가진 클래스입니다.
+
+```
+public class SingerAlbumsDto {
+	
+	private final String firstName;
+	private final String lastName;
+	private final String title;	
+	
+	public SingerAlbumsDto(String firstName, String lastName, String title) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.title = title;		
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getTitle() {
+		return title;
+	}	
+}
+```
+
+
+참고  
+[Native SQL Queries](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#sql)
+
 
 [처음](../README.md) | [다음](../08/README.md)

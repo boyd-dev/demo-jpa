@@ -47,7 +47,7 @@ public Singer findByIdWithAlbums(@Param("singerId") Long id);
 
 참고적으로, 스프링 데이터 JPA가 제공하는 `JpaRepository`를 쓰지 않는 "plain" JPA에서는 `TypedQuery<X>`를 통해서 직접 query를 만들 수 있습니다. EntityManager의 `createQuery` 또는 `createNamedQuery`를 사용하여 JPQL이나 일반 SQL(native query)로 query를 작성합니다.  
 
-예를 들어 Named Query는 해당 엔티티에 `@NamedQueries` 어노테이션을 사용하여 작성할 수 있습니다. DAO 클래스에서 아래와 같이 EntityManager의 `createNamedQuery`로 불러올 수 있습니다.
+예를 들어 네임드 쿼리는 해당 엔티티에 `@NamedQueries` 어노테이션을 사용하여 작성할 수 있습니다. DAO 클래스에서 아래와 같이 EntityManager의 `createNamedQuery`로 불러올 수 있습니다.
 
 ```
 // Entity
@@ -74,7 +74,7 @@ public List<RecordLabel> findRecordLabel(String label) {
 }
 ```
 
-`JpaRepository`에서 사용하려면 Named Query의 이름의 형식을 `{Entity Name}.{Method Name}` 으로 해야 합니다.
+`JpaRepository`에서 사용하려면 네임드 쿼리의 이름의 형식을 `{Entity Name}.{Method Name}` 으로 해야 합니다.
 
 ```
 // Named Query
