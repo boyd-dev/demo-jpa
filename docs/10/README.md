@@ -38,3 +38,6 @@ public interface SingerRepository extends JpaRepository<Singer, Long>, SingerCus
 `SingerRepository`는 `JpaRepository`가 제공하는 CRUD, 쿼리 빌더에 의한 자동생성, `@Query`, 네임드 쿼리 등과 함께 커스텀 레포지토리인 `SingerCustomRepository`가 제공하는 CRUD도 포함하게 됩니다. 같은 메소드 시그너처(메소드 이름과 인자 타입)가 있는 경우 커스텀 레포지토리가 우선합니다. 
 
 커스텀 레포지토리는 스프링 데이터 JPA에서 `EntityManager`를 직접 활용하려고 할 때 또는 JPA에 국한하지 않고 다양한 데이터 액세스 방식을 적용할 때 고려할 수 있겠습니다.
+
+
+[처음](../README.md)
