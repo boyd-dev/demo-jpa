@@ -1,4 +1,4 @@
-## 스프링 부트 JPA 모범 사례 - 스터디
+## 스프링 부트 JPA 모범 사례
 
 2020년 출판된 안겔 레오나르드(Anghel Leonard)가 쓴 "Spring Boot Persistence Best Practice" 번역판(한성곤 역)에 대한 스터디
 
