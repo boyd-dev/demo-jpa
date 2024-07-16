@@ -46,7 +46,7 @@
 
   유효하지 않은(outdated) 엔티티가 캐시에 남을 수 있는 경우는, 책에서 예로 든 `JpaRepository` 기본 제공 메소드인 `deleteInBatch`가 그 중 하나다. 이 메소드는 이름 그대로 다건을 벌크로 지울 때 유용하다(delete가 한번만 호출). 문제가 될 소지가 있는 이유는 그렇게 삭제된 엔티티가 캐시에 (아마 managed 상태로) 남아 있기 때문에 `author.setGenre("Anthology")`라고 하면 예외가 발생한다(물론 삭제된 것을 업데이트할 일은 없을 것 같은데?). 이것은 `@Modifying` 어노테이션으로 직접 DML을 작성했을 때도 마찬가지 맥락의 예외가 발생한다. 데이터베이스에서는 삭제가 되었지만 "persistent context"에는 이것이 아직 유효한 엔티티로 판단하므로 다시 업데이트하려고 하는 것이다. 그래서 보통 `@Modifying(clearAutomatically=true, flushAutomatically=true)`으로 1차 캐시를 현행화시킨다.
    
-   다음 두 가지 메소드를 살펴보자.
+   가수(Singer) 엔티티를 예로 들어 다음 두 가지 메소드를 살펴보자.
    ```
    public interface SingerRepository extends JpaRepository<Singer, Long> {
 
