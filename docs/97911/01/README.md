@@ -18,7 +18,7 @@
 
   > Normally, most Java objects provide a built-in equals() and hashCode() based on the object’s identity, so each new object will be different from all others. This is generally what you want in ordinary Java programming. Conceptually however this starts to break down when you start to think about the possibility of multiple instances of a class representing the same data.
 
-`Object` 클래스의 `equals`와 `hashCode` 기본 구현을 그대로 사용하면 같지 않기 때문에 반드시 엔티티의 특성에 맞게 오버라이딩 해야 한다. 참고로 자바에서 `equals`가 true가 되려면 `hashCode`도 반드시 일치해야 한다. 책에서는 아마 이런 이유로 `hashCode`가 항상 상수를 리턴하도록 만들어야 한다고 설명한다.
+  `Object` 클래스의 `equals`와 `hashCode` 기본 구현을 그대로 사용하면 같지 않기 때문에 반드시 엔티티의 특성에 맞게 오버라이딩 해야 한다. 참고로 자바에서 `equals`가 true가 되려면 `hashCode`도 반드시 일치해야 한다. 책에서는 아마 이런 이유로 `hashCode`가 항상 상수를 리턴하도록 만들어야 한다고 설명한다.
   
   본문에서는 엔티티는 모든 상태 전이에서 동등(equals == true)해야 한다고 설명한다. 여기서 상태 전이란 "persistence context"와의 관계, 또는 데이터베이스와의 관계를 나타내는 상태들 `transient`, `managed`, `detached` 등을 의미한다. 이러한 상태 전이가 일어나도 해당 엔티티는 equals 해야 한다.
 
