@@ -102,13 +102,16 @@
   LEFT OUTER JOIN album albums1_ 
   ON singer0_.id=albums1_.singer_id WHERE singer0_.id=3
   ```
+  `EntityGraphType.FETCH` 속성은 `attributeNodes`에 지정된 속성을 eager 패치하고 나머지는 lazy로 가져온다. 다른 타입으로 ``EntityGraphType.LOAD`가 있는데 `attributeNodes`에 지정된 속성을 eager 패치하고 나머지는 지정된 패치 타입이나 기본값을 적용한다.
   
-  다른 메소드에도 재사용이 가능하다.
+  엔티티 그래프는 다른 메소드(쿼리)에도 재사용이 가능하다.
   ``` 
   @EntityGraph(value = "singer_albums_graph", type = EntityGraphType.FETCH)
   public List<Singer> findByBirthDateGreaterThan(Date d);
   ```
-  엔티티 그래프는 JPQL에서 사용 가능하지만 네이티브 쿼리에서는 쓸 수 없다.
+  엔티티 그래프는 JPQL에서 사용 가능하지만 네이티브 쿼리에서는 쓸 수 없다.  
+
+- 일반적으로 다수의 연관 관계 데이터를 동시에 즉시 가져오기 하는 경우 `MultipleBagFetchException`이 발생할 수 있다.
 
 
 
