@@ -112,6 +112,7 @@ private Set<Album> albums = new HashSet<>();
 
 연관 관계에 따라서 기본 `FetchType`이 정해져 있습니다. 단방향 ManyToOne는 기본적으로 "ToOne"에 해당하는 엔티티를 JOIN 해서 가져옵니다. 하지만 `FetchType.LAZY`로 변경하면, 예를 들어 `Album`에서 `getSinger()`를 호출하지 않는다면 추가적으로 `Singer`를 조회하지 않습니다. 반면에 양방향 OneToOne은 항상 `FetchType.EAGER`로 동작합니다. 
 
+`FetchType.LAZY`에서 종종 경험하는 에러는 `LazyInitializationException`입니다. 이것은 JPA 세션이 종료된 상태("persistent context"가 닫힌 상태)에서 엔티티를 "lazy" 로드할 때 발생하는데 `FetchType.LAZY`로 설정된 연관 관계는 미리 초기화되어야 하기 때문입니다. 초기화란 연관된 엔티티를 가져오는 작업을 의미합니다. 
 
 ## @OneToOne
 이 관계는 DB 관점에서 master-detail 관계에 해당합니다. Phone과 PhoneDetail을 예로 들겠습니다.  

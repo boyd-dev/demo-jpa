@@ -1,9 +1,11 @@
 ## 스프링 "plain" JPA
 
 이 글은 스프링에서 JPA를 사용하는 방법에 대해 간단히 알아보려는 목적으로 작성되었습니다. 그래서(?) 스프링 부트와 "스프링 데이터 JPA"를 쓰지 않았습니다.
-예제의 소스는 [여기](https://github.com/boyd-dev/demo-jpa/tree/main/example)를 참고하면 되겠습니다.
+예제의 소스는 [여기](https://github.com/boyd-dev/demo-jpa/tree/main/example)를 참고하면 되겠습니다.  
 
-가능하면 하이버네이트와 스프링의 공식 문서를 인용했습니다. 예제 데이터 모델은 "Pro Spring 5, 5th(번역서는 전문가를 위한 스프링 5)"를 약간 변형해서 사용했습니다.
+후반부에는 스프링 데이터 JPA의 `JpaRepository`에 관한 설명이 추가되어 있습니다. 
+
+가능하면 하이버네이트와 스프링의 공식 문서를 인용했습니다. 예제 데이터 모델은 "Pro Spring 5, 5th(번역서는 전문가를 위한 스프링 5)"를 약간 변형해서 사용했습니다(Singer-Album-RecordLabel).
 
 예제 환경은 다음과 같습니다.
 
