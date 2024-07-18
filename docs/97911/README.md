@@ -4,7 +4,7 @@
 
 책의 예제는 JDK 12, 스프링 부트 2.2.2.release를 기준으로 되어 있음
 
-스터디에 사용된 라이브러리 버전
+스터디에 사용된 것은 JDK 17과 아래 버전
 ```
  // Hibernate
 implementation 'org.hibernate:hibernate-core:5.3.36.Final'
