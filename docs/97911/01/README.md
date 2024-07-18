@@ -102,7 +102,7 @@
   LEFT OUTER JOIN album albums1_ 
   ON singer0_.id=albums1_.singer_id WHERE singer0_.id=3
   ```
-  `EntityGraphType.FETCH` 속성은 `attributeNodes`에 지정된 속성을 eager 패치하고 나머지는 lazy로 가져온다. 다른 타입으로 ``EntityGraphType.LOAD`가 있는데 `attributeNodes`에 지정된 속성을 eager 패치하고 나머지는 지정된 패치 타입이나 기본값을 적용한다.
+  `EntityGraphType.FETCH` 속성은 `attributeNodes`에 지정된 속성을 eager 패치하고 나머지는 lazy로 가져온다. 다른 타입으로 `EntityGraphType.LOAD`가 있는데 `attributeNodes`에 지정된 속성을 eager 패치하고 나머지는 지정된 패치 타입이나 기본값을 적용한다.
   
   엔티티 그래프는 다른 메소드(쿼리)에도 재사용이 가능하다.
   ``` 
@@ -125,7 +125,9 @@
 엔티티 그래프는 엔티티를 가져올 때 연관 관계에 있는 엔티티도 함께 즉시 가져오기한 것이었는데 만약 연관 관계의 엔티티에도 다시 연관된 엔티티가 있어서 그것까지 가져오려면 어떻게 해야할까? 이때 사용할 수 있는 것이 서브그래프(subgraph)이다. 책에서는 author-book-publisher의 관계를 예로 들었다. 저자를 가져오면서 도서를 가져오고 다시 도서의 출판사를 즉시 가져오기 하는 것이다. 출판사는 도서와 `@OneToMany` 관계에 있다. 
 
 - 애드혹 서브그래프  
-에드혹에서도 서브그래프를 사용할 수 있다. 이때는 `attributePaths = {"books.publisher"}`와 같이 "."으로 연관 관계 그래프를 표시한다.
+에드혹에서도 서브그래프를 사용할 수 있다. 이때는 `attributePaths = {"books.publisher"}`와 같이 "."으로  서브그래프를 표시한다.
 
 
+- `@OneToOne` 관계의 최적화  
+`@OneToOne`은 master-detail 관계이며(부모-자식이라고 해보자) FK는 detail 쪽에 생기는 것이 맞다. 따라서 단방향에서는 detail에 `@OneToOne` 어노테이션이 추가된다. 데이터의 흐름은 부모에서 자식으로 가야 한다. 책에서는 author를 조회하고 그것을 `setAuthor`에 넣고 detail을 저장한다. 하지만 author에서 book을 가져오려면 author에는 book을 참조하는 관계가 없으므로 직접 쿼리를 작성해야 한다. 
 
