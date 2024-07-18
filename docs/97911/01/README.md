@@ -129,9 +129,9 @@
 
 
 - `@OneToOne` 관계의 최적화  
-`@OneToOne`은 master-detail 관계이며(부모-자식이라고 해보자) FK는 detail 쪽에 생기는 것이 맞다. 따라서 단방향에서는 detail에 `@OneToOne` 어노테이션이 추가된다. 데이터의 흐름은 부모에서 자식으로 가야 한다. 책에서는 author를 조회하고 그것을 `setAuthor`에 넣고 detail을 저장한다. 하지만 author에서 book을 가져오려면 author에는 book을 참조하는 관계가 없으므로 직접 쿼리를 작성해야 한다.  
+`@OneToOne`은 master-detail 관계이며(부모-자식이라고 해보자) FK는 detail 쪽에 생기는 것이 맞다. 따라서 단방향에서는 detail에 `@OneToOne` 어노테이션이 추가된다. 데이터의 흐름은 부모에서 자식으로 가야 한다. 책에서는 author를 조회하고 그것을 `setAuthor`에 넣고 book을 저장한다. 하지만 author에서 book을 가져오려면 author에는 book을 참조하는 관계가 없으므로 직접 쿼리를 작성해야 한다.  
   이것을 해결하려면 양방향으로 해야 하는데 양방향의 경우는 lazy를 적용하더라도 항상 eager로 자식 엔티티를 가져온다. 따라서 단방향을 유지하면서 자식을 가져오기 위해서는 `@MapsId`를 사용하여 부모와 자식의 PK를 공유한다.  
 
-  
+
 
 
