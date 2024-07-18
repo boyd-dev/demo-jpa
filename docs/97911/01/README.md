@@ -121,6 +121,11 @@
   @EntityGraph(attributePaths = {"albums"}, type = EntityGraphType.FETCH)
   ```
 
+- 엔티티 서브그래프  
+엔티티 그래프는 엔티티를 가져올 때 연관 관계에 있는 엔티티도 함께 즉시 가져오기한 것이었는데 만약 연관 관계의 엔티티에도 다시 연관된 엔티티가 있어서 그것까지 가져오려면 어떻게 해야할까? 이때 사용할 수 있는 것이 서브그래프(subgraph)이다. 책에서는 author-book-publisher의 관계를 예로 들었다. 저자를 가져오면서 도서를 가져오고 다시 도서의 출판사를 즉시 가져오기 하는 것이다. 출판사는 도서와 `@OneToMany` 관계에 있다. 
+
+- 애드혹 서브그래프  
+에드혹에서도 서브그래프를 사용할 수 있다. 이때는 `attributePaths = {"books.publisher"}`와 같이 "."으로 연관 관계 그래프를 표시한다.
 
 
 
