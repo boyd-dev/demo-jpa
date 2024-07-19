@@ -31,7 +31,7 @@ public abstract class BaseEntity {
 ```
 엔티티의 속성은 테이블의 컬럼에 해당합니다. 테이블은 PK가 있는데 엔티티에서는 `@Id`로 PK 컬럼에 해당하는 속성을 지정합니다. 모든 엔티티는 반드시 `@Id`를 가져야 합니다. `@GeneratedValue(strategy = GenerationType.IDENTITY)`은 자동증가 컬럼을 의미하는데 신규 건을 등록할 때 자동으로 PK를 생성해주기 위함입니다. 일련번호로 들어가는 것을 원하지 않으면 UUID를 사용하거나 `@TableGenerator`을 사용하여 별도의 채번 테이블을 이용할 수도 있습니다.
 
-엔티티 이름에 대응되는 테이블 이름을 `name` 속성으로 명시적으로 지정할 수 있습니다. 이것을 생략하는 경우는 디폴트 네이밍 전략 `ImplicitNamingStrategyJpaCompliantImpl`이 적용됩니다. 보통 엔티티 이름과 동일하게 소문자로 테이블이 생성됩니다.
+엔티티 이름에 대응되는 테이블 이름을 `name` 속성으로 명시적으로 지정할 수 있습니다. 이것을 생략하는 경우는 디폴트 네이밍 전략 `ImplicitNamingStrategyJpaCompliantImpl`이 적용됩니다. 보통 엔티티 이름과 동일하게 소문자로 테이블이 생성되고 컬럼 이름도 특별하게 지정하지 않은 경우 동일하게 만들어집니다.
 
 ```
 @Entity(name = "Singer")
@@ -105,6 +105,8 @@ public class RecordLabel extends BaseEntity implements Serializable {
 }
 ```
 
-엔티티의 정의가 끝났습니다. 그런데 관계형DB의 테이블들이 서로 relation을 가지고 있는 것처럼 엔티티들도 서로 연관 관계(association)을 갖도록 해야 합니다. 이러한 관계는 데이터베이스에서 FK 같은 것으로 생성됩니다.
+엔티티는 관계형DB의 테이블의 매핑이지만 그렇다고 테이블과 동일하지 않습니다. 관계형DB에서는 정규화를 통해 테이블을 만들지만 엔티티는 정규화에는 없는 상속, 연관관계, 임베디드 등 객체지향적인 특성이 있기 때문에 단순히 매핑의 관점으로만 볼 수 없는 부분들이 많습니다.  
+
+엔티티의 정의가 끝났습니다. 그런데 관계형DB의 테이블들이 서로 relation을 가지고 있는 것처럼 엔티티들도 서로 연관관계(association)을 갖도록 해야 합니다. 이러한 관계는 데이터베이스에서 FK(foreign key)에 해당합니다.
 
 [처음](../README.md) | [다음](../06/README.md)
