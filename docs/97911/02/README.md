@@ -42,7 +42,7 @@
 - 불변(immutable) 엔티티  
 불변 엔티티의 조건은 연관관계를 포함하지 않고 `@Immutable`어노테이션이 있는 엔티티이다.  생성하면 수정이 되지 않기 때문에 캐시에 저장하는 경우가 있는데 이때 엔티티에 `@Cache`(org.hibernate.annotations.Cache)를 지정할 수 있다. 이 캐시는 1차 캐시인 "persistent context"가 아니라 애플리케이션 레벨에서 제공하는 "2차 캐시(second level cache)"이다. `@Cache`를 사용하기 위해서는 별도의 라이브러리가 필요한데 책에서는 EhCache를 사용한다.  
 
-  여기서는 아래와 같이 디펜던시(EhCache 2.x)를 추가하고 캐시 설정이 필요하다. 
+  여기서는 아래와 같이 EhCache 2.x을 기반으로 하는 라이브러리를 추가하고 캐시 설정이 필요하다. 
   ```
   implementation 'org.hibernate:hibernate-ehcache:5.3.36.Final'
   ```
@@ -67,7 +67,7 @@
   83900 nanoseconds spent performing 1 L2C hits;  // 2
   ``` 
   
-  참고로 `hibernate-ehcache`는 deprecated 되었고 JCache 구현체인 EhCache 3를 쓰려면 `hibernate-jcache`를 사용해야 하는 것 같다. 관련 이슈는 [여기](https://hibernate.atlassian.net/browse/HHH-12441)를 참조
+  참고로 `hibernate-ehcache`는 deprecated 되었고 JCache 구현체인 EhCache 3를 쓰려면 `hibernate-jcache`를 사용해야 하는 것으로 보인다. 관련 이슈는 [여기](https://hibernate.atlassian.net/browse/HHH-12441)를 참조
 
 
 [처음](../README.md) | [다음](../03/README.md)
