@@ -178,7 +178,7 @@ insert into album (release_date, singer_id, title, version) values (?, ?, ?, ?)
 ```
 album 테이블의 `singer_id`에는 직전에 인서트된 singer의 PK가 저장됩니다. 이 과정을 통해 두 테이블에 설정된 FK의 정합성이 보장됩니다. JPA 트랜잭션 관리자에 의해 메소드가 종료되면 자동으로 DB에 커밋됩니다.
 
-리턴되는 Singer 객체는 이제 PK에 해당하는 `id` 값이 들어 있고 `transient`에서 비로소 `managed` 상태가 됩니다. `managed` 상태의 엔티티 객체들은 소위 말하는 "persistence context"에 캐시(cache)됩니다. 하이버네이트의 가이드에 이에 대한 [설명](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#pc)이 잘 나와 있습니다.
+리턴되는 Singer 객체는 이제 PK에 해당하는 `id` 값이 들어 있고 `transient`에서 비로소 `managed` 상태가 됩니다. `managed` 상태의 엔티티 객체들은 소위 말하는 "persistence context"에 캐시(cache)됩니다. 하이버네이트의 가이드에 상태에 대한 [설명](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#pc)이 잘 나와 있습니다.
 
 >transient  
 the entity has just been instantiated and is not associated with a persistence context. It has no persistent representation in the database and typically no identifier value has been assigned (unless the assigned generator was used).

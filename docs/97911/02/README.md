@@ -75,4 +75,25 @@
   참고로 `hibernate-ehcache`는 deprecated 되었고 JCache 구현체인 EhCache 3를 쓰려면 `hibernate-jcache`를 사용해야 하는 것으로 보인다. 관련 이슈는 [여기](https://hibernate.atlassian.net/browse/HHH-12441)를 참조
 
 
+- 엔티티 복제  
+author-book을 `@ManyToMany` 관계로 보고 공동저자를 추가할 때 기존 저자를 복제하여 새로운 저자를 등록하는 경우를 설명한다. 보통 새로운 엔티티를 등록할 때는 엔티티를 생성하고 필요한 데이터를 setter를 통해 넣고 저장하지만 여기서는 엔티티의 (인자 없는)기본 생성자를 `private`로 하고 대신에 기존 엔티티를 인자로 받아서 필요한 속성을 복제하고 새로운 엔티티를 생성하는 생성자를 추가한다.  
+
+  ```
+  @Entity
+  public class Author implements Serializable {
+      
+      ...
+      private Author() { }
+
+      public Author(Author author) {
+         this.genre = author.getGenre();
+         this.books.addAll(author.getBooks());
+      }
+
+      ...
+  }  
+  ```
+
+  
+
 [처음](../README.md) | [다음](../03/README.md)
