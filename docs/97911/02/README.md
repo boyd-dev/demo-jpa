@@ -98,4 +98,4 @@ author-book을 `@ManyToMany` 관계로 보고 공동저자를 추가할 때 기�
 
 
 
-[처음](../README.md) | [다음](../03/README.md)
+[처음](../README.md) | [이전](../01/README.md) | [다음](../03/README.md) 
