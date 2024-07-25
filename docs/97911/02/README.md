@@ -99,7 +99,7 @@ author-book을 `@ManyToMany` 관계로 보고 공동저자를 추가할 때 기�
 하이버네이트는 managed 엔티티의 변경 감지를 더티 체킹을 통해 수행한다. 플러시 시점에 처음 상태와 현재 상태를 비교하여 변경 여부를 검사한다. 이렇게 되면 persistent context 내의 모든 엔티티에 대해 더티 체킹을 해야 하고 엔티티가 많은 경우는 성능이 떨어질 수 있다.  
   더티 트래킹은 하이버네이트 5부터 적용된 "bytecode enhancement"를 사용하여 엔티티 자체에서 변경 여부를 직접 판단할 수 있도록 엔티티 클래스의 바이트 코드를 조작한다. 이렇게 하면 플러시 시점에 하이버네이트가 상태 변경 여부를 검사할 필요 없이 엔티티의 더티 트래킹을 검사하기만 하면 된다(하이버네이트 문서에서는 이것을 "in-line dirty tracking"이라고 표현).  
 
-  하지만 더티 트래킹을 디폴트로 비활성화되어 있고 이것을 활성화시키기 위해서는 "bytecode enhancement"를 적용하기 위해 빌드 타임에 플러그인을 설정해야 하고 더티 트래킹 옵션인 `hibernate.enhancer.enableDirtyTracking`을 true로 설정해야 한다. 플러그인은 gradle 또는 maven에 설정해야 한다. 책에서는 메이븐인 경우를 예제로 들었다.
+  더티 트래킹은 디폴트로 비활성화되어 있다. 이것을 활성화시키기 위해서는 "bytecode enhancement"를 적용해야 하고 빌드 타임에 플러그인을 설정해야 한다. 또 더티 트래킹 옵션인 `hibernate.enhancer.enableDirtyTracking`을 true로 설정해야 한다. 플러그인은 gradle용과 maven용이 있고 책에서는 후자를 예제로 들었다.
 
 
   
