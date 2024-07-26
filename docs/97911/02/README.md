@@ -93,7 +93,7 @@ author-book을 `@ManyToMany` 관계로 보고 공동저자를 추가할 때 기�
       ...
   }  
   ```
-  이 생성자를 통해 만들어진 엔티티의 다른 속성을 입력하고 저장하면 복제된 속성과 새로 입력된 속성으로 엔티티를 추가할 수 있다.이것은 부모의 일부 속성을 복제하면서 동시에 연관관계에 있는 컬렉션 엔티티까지 복제할 때 유용할 수 있다. 특히 `@ManyToMany` 관계에서는 의미가 있다(다른 연관관계에서는 부모 엔티티 복제하여 추가하면서 동일한 연관관계의 데이터를 동기화하는 것은 말이 안된다). 그래서 복제는 일반적으로 사용되는 경우는 아니라고 한다. 책에서는 컬렉션 타입인 도서를 복제하는 예제도 있는데 동일한 도서가 중복되어 저장되므로 다소 이해가 안되는 예제로 보인다.
+  이 생성자를 통해 만들어진 엔티티의 다른 속성을 입력하고 저장하면 복제된 속성과 새로 입력된 속성으로 엔티티를 추가할 수 있다. 이것은 부모의 일부 속성을 복제하면서 동시에 연관관계에 있는 컬렉션 엔티티까지 복제할 때 유용할 수 있다. 특히 `@ManyToMany` 관계에서는 의미가 있다(다른 연관관계에서는 부모 엔티티 복제하여 추가하면서 동일한 연관관계의 데이터를 동기화하는 것은 말이 안된다). 그래서 복제는 일반적으로 사용되는 경우는 아니라고 한다. 책에서는 컬렉션 타입인 도서를 복제하는 예제도 있는데 동일한 도서가 중복되어 저장되므로 다소 이해가 안되는 예제로 보인다.
   
 - 더티 트래킹  
 하이버네이트는 managed 엔티티의 변경 감지를 더티 체킹을 통해 수행한다. 플러시 시점에 처음 상태와 현재 상태를 비교하여 변경 여부를 검사한다. 이렇게 되면 persistent context 내의 모든 엔티티에 대해 더티 체킹을 해야 하고 엔티티가 많은 경우는 성능이 떨어질 수 있다.  
@@ -104,8 +104,29 @@ author-book을 `@ManyToMany` 관계로 보고 공동저자를 추가할 때 기�
 - 속성 타입 변환기(AttributeConverter)  
 자바의 타입과 데이터베이스 컬럼 타입은 당연히 차이가 있다. 하이버네이트에서는 "기본 타입(Basic Type)"이라는 범위 안에 이러한 타입들을 [매핑](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#basic)하고 있다. 예를 들어 `java.lang.Boolean`은 하이버네이트에 의해, MySQL의 경우 `bit(1)`으로 생성된다. 기본 타입의 속성들은 `@javax.persistence.Basic`어노테이션을 붙여야 하지만 보통은 생략한다. 대부분의 엔티티 속성들은 기본 타입으로 취급된다.  
 
-  그런데 이미 기존에 존재하는 테이블의 컬럼 타입이 정해져 있고 이것을 매핑해야 하는 경우, 기본 타입에서 벗어나게 되면 어떻게 해야 할까? 책에서 예를 든 것처럼 베스트셀러 작가여부를 나타내는 컬럼 best_selling varchar(3)이면 기본 타입 어느 것도 해당되지 않는다. 아마도 원래 의도한 것은 "Yes"와 "No"를 저장하려고 했지만 엔티티 속성을 불리언으로 매핑하기 위해서는 뭔가 변환이 필요하다. 이때 사용할 수 있는 것이 커스텀 속성 컨버터인 `AttributeConverter`를 이용하는 방법이다. 
-  
+  그런데 이미 기존에 존재하는 테이블의 컬럼 타입이 정해져 있고 이것을 매핑해야 하는 경우, 기본 타입에서 벗어나게 되면 어떻게 해야 할까? 책에서 예를 든 것처럼 베스트셀러 작가여부를 나타내는 컬럼 best_selling varchar(3)이면 기본 타입 어느 것도 해당되지 않는다. 아마도 원래 의도한 것은 "Yes"와 "No"를 저장하려고 했지만 엔티티 속성을 불리언으로 매핑하기 위해서는 뭔가 변환이 필요하다. 이때 사용할 수 있는 것이 커스텀 속성 컨버터인 `AttributeConverter<X,Y>`를 이용하는 방법이다. X는 엔티티 측 타입이고 Y는 컬럼 타입을 나타낸다. 
+
+  ```
+  @Converter(autoApply = true)
+  public class BooleanConverter implements AttributeConverter<Boolean, String> {
+
+	  @Override
+	  public String convertToDatabaseColumn(Boolean attribute) {
+		  // TODO Auto-generated method stub
+		  return null;
+	  }
+
+	  @Override
+	  public Boolean convertToEntityAttribute(String dbData) {
+		  // TODO Auto-generated method stub
+		  return null;
+	 }
+
+  }
+  ```
+  `@Converter` 어노테이션은 기본 타입을 변환하는 용도로 해당 클래스가 사용됨을 나타낸다. `autoApply = true`이면 모든 엔티티의 속성에 대해 일괄 적용된다. 특정 속성에만 컨버터를 적용하려면 해당 속성에 `@Convert(converter = BooleanConverter.class)` 어노테이션을 추가한다.
+
+- 도메인 이벤트  
 
 
 
