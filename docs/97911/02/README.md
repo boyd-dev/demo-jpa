@@ -75,8 +75,8 @@
   참고로 `hibernate-ehcache`는 deprecated 되었고 JCache 구현체인 EhCache 3를 쓰려면 `hibernate-jcache`를 사용해야 하는 것으로 보인다. 관련 이슈는 [여기](https://hibernate.atlassian.net/browse/HHH-12441)를 참조
 
 
-- 엔티티 복제  
-author-book을 `@ManyToMany` 관계로 보고 공동저자를 추가할 때 기존 저자를 복제하여 새로운 저자를 등록하는 경우를 설명한다. 보통 새로운 엔티티를 등록할 때는 엔티티를 생성하고 필요한 데이터를 setter를 통해 넣고 저장하지만 여기서는 엔티티의 (인자 없는)기본 생성자를 `private`로 하고(이렇게 하면 최초 저장시에는 어떻게?) 대신에 기존 엔티티를 인자로 받아서 필요한 속성을 복제하는 새로운 생성자를 추가한다.  
+- 엔티티 복제(연관관계 포함)  
+author-book을 `@ManyToMany` 관계로 보고 공동저자를 추가할 때 기존 저자를 복제하여 새로운 저자를 등록하는 경우를 설명한다. 보통 새로운 엔티티를 등록할 때는 엔티티를 생성하고 필요한 데이터를 setter를 통해 넣고 저장하지만 여기서는 엔티티의 (인자 없는)기본 생성자를 `private`로 하고(이렇게 하면 최초 저장할 때는 어떻게?) 대신에 기존 엔티티를 인자로 받아서 필요한 속성을 복제하는 새로운 생성자를 추가한다.  
 
   ```
   @Entity
@@ -101,7 +101,10 @@ author-book을 `@ManyToMany` 관계로 보고 공동저자를 추가할 때 기�
 
   더티 트래킹은 디폴트로 비활성화되어 있다. 이것을 활성화시키기 위해서는 "bytecode enhancement"를 적용해야 하고 빌드 타임에 플러그인을 설정해야 한다. 또 더티 트래킹 옵션인 `hibernate.enhancer.enableDirtyTracking`을 true로 설정해야 한다. 플러그인은 gradle용과 maven용이 있고 책에서는 후자를 예제로 들었다.
 
+- 속성 타입 변환기(AttributeConverter)  
+자바의 타입과 데이터베이스 컬럼 타입은 당연히 차이가 있다. 하이버네이트에서는 "기본 타입(Basic Type)"이라는 카테고리 안에 이러한 타입들을 [매핑](https://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#basic)하고 있다. 예를 들어 `java.lang.Boolean`은 하이버네이트에 의해, MySQL의 경우 `bit(1)`으로 생성된다. 기본 타입의 속성들은 `@javax.persistence.Basic`어노테이션을 붙여야 하지만 보통은 생략한다. 대부분의 엔티티 속성들은 기본 타입으로 취급된다.  
 
+  그런데 이미 기존에 존재하는 테이블의 컬럼 타입이 정해져 있고 이것을 매핑해야 하는 경우, 기본 타입에서 벗어나게 되면 어떻게 해야 할까? 책에서 예를 든 것처럼 저자가 베스트셀러 작가여부를 나타내는 컬럼 best_selling varchar(3)이면 기본 타입 어느 것도 해당되지 않는다. 아마도 원래 의도한 것은 "Yes"와 "No"를 저장하려고 했지만 엔티티 속성을 불리언으로 매핑하려면 다른 방법이 필요하다. 이때 사용할 수 있는 것이 커스텀 속성 컨버터인 `AttributeConverter`를 이용하는 방법이다. 
   
 
 
