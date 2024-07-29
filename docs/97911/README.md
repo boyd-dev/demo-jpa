@@ -18,7 +18,7 @@ implementation 'org.springframework.data:spring-data-jpa:2.7.18'
 
 1. [연관관계](01/README.md)
 2. [엔티티](02/README.md)
-3. 페치
+3. [페치](03/README.md)
 4. 배치 처리
 5. 컬렉션
 6. 커넥션과 트랜잭션
