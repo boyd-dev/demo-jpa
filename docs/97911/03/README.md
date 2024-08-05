@@ -6,7 +6,7 @@
 - 세션 수준의 반복읽기  
 하이버네이트는 "session-level repeatable read"를 보장하기 때문에 항상 1차 캐시(persistence context)에 해당 엔티티가 있는지 먼저 검사한다. 여기서 알아둘 것은 설령 해당 엔티티를 조회하는 select를 직접 실행하더라도 데이터베이스에서는 실행이 되지만 여전히 캐시에 있는 엔티티를 반환한다는 점이다. 따라서 가장 최신 스냅샷을 가져오기 위해 조회하는 것은 무의미한 일이 될 수 있다(EntityManager에서 제공하는 `refresh`를 사용하면 다시 조회한 결과를 가져올 수 있기는 하다).  
 
-  책에서는 이를 보여주기 위해 `Propagation.REQUIRES_NEW`로 새로운 트랜잭션을 시작해서 데이터를 업데이트한 후 재개되는 트랜잭션에서 다시 select한 결과를 비교한다. 앞서 업데이트가 되면서 커밋이 되었지만 엔티티는 여전히 처음 가져온 데이터가 유지된다. 참고로 MySQL의 경우 기본 격리 레벨이 repeatable read이므로 하이버네이트의 세션 수준의 반복읽기가 아니더라도 처음 조회한 데이터가 나오기 때문에 MySQL을 시작할 때 격리모드를 read-committed로 변경하고 테스트해야 확실하다.ㅕ
+  책에서는 이를 보여주기 위해 `Propagation.REQUIRES_NEW`로 새로운 트랜잭션을 시작해서 데이터를 업데이트한 후 재개되는 트랜잭션에서 다시 select한 결과를 비교한다. 앞서 업데이트가 되면서 커밋이 되었지만 엔티티는 여전히 처음 가져온 데이터가 유지된다. 참고로 MySQL의 경우 기본 격리 레벨이 repeatable read이므로 하이버네이트의 세션 수준의 반복읽기가 아니더라도 처음 조회한 데이터가 나오기 때문에 MySQL을 시작할 때 격리모드를 read-committed로 변경하고 테스트해야 확실하다.
 
   ```
   mysqld --console --transaction-isolation=READ-COMMITTED
