@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.demo.service.SingerService;
 
-//@SpringBootApplication(scanBasePackages = {"com.example.demo.controller", "com.example.demo.service", "com.example.demo.repository"})
-//@SpringBootApplication(scanBasePackages = {"com.example.demo.*"})
 @SpringBootApplication
 public class DemoBootApplication {
 	
