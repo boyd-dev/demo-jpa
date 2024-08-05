@@ -56,7 +56,7 @@
 
   그런데 어차피 초기에 가져오지 않을 속성이고 Jackson이 JSON으로 변환하면서 null이 된다면 아예 Jackson에게 이 속성을 제외하라고 설정하는 편이 좋다. 따라서 엔티티에 `@JsonInclude(value = Include.NON_NULL)` 어노테이션을 추가한다. 이렇게 하면 null인 속성을 제외하고 JSON을 리턴한다.  
 
-  스프링 부트 3.3.2와 그레이들 기반의 예제는 [여기](./AttributeLazy/demo-boot/)에 있다. bytecode enhancement는 빌드할때 그레이들 플러그인에 의해 적용되기 때문에 JUnit Test를 실행하지 말고 Gradle Test를 실행해야 한다. 
+  스프링 부트 3.3.2와 그레이들 기반의 예제는 [여기](./examples/demo-boot/)에 있다. bytecode enhancement는 빌드할때 그레이들 플러그인에 의해 적용되기 때문에 JUnit Test를 실행하지 말고 Gradle Test를 실행해야 한다. 
 
   두 번째는 필터를 이용하는 방법인데 복잡해서 생략한다(필터까지 만들 필요가?). 
 
