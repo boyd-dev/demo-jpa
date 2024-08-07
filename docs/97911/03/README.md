@@ -58,7 +58,9 @@
 
   스프링 부트 3.3.2와 그레이들 기반의 예제는 [여기](./examples/demo-boot/)에 있다. bytecode enhancement는 빌드할때 그레이들 플러그인에 의해 적용되기 때문에 JUnit Test를 실행하지 말고 Gradle Test를 실행해야 한다. 
 
-  두 번째는 필터를 이용하는 방법인데 복잡해서 생략한다(필터까지 만들 필요가?). 
+  두 번째는 필터를 이용하는 방법인데 복잡해서 생략한다(필터까지 만들 필요가?).  
+
+  bytecode enhancement를 쓰는 것이 번거롭다면 상속을 이용하여 서브 엔티티를 이용하는 방법이 있다. 즉 지연 로드 속성만 가진 엔티티(서브 엔티티) 그렇지 않은 속성을 가진 엔티티(부모 엔티티)로 분리하는 것인데 어떻게 보면 이것이 가장 간단한 방법일 수 있다.
 
 - 프로젝션으로 데이터 가져오기  
 엔티티는 기본적으로 읽기-쓰기 모드로 캐시에 저장되고 플러시 시점에 더티 체킹 메커니즘으로 변경 사항을 추적하여 데이터베이스에 반영한다. 이러한 일련의 처리들은 리소스를 소모하고 특히 로드된 엔티티들이 많을 때는 성능에 큰 영향을 미친다. 따라서 그냥 조회만 하는 엔티티는 반드시 읽기 전용 모드로 가져와야 하고 더구나 수정할 일도 없다면 엔티티를 직접 가져올 필요도 없다.  
@@ -67,7 +69,8 @@
 
   >For read-only transactions, you should fetch DTO projections because they allow you to select just as many columns as you need to fulfill a certain business use case. This has many benefits like reducing the load on the currently running Persistence Context because DTO projections don’t need to be managed.
 
-  프로젝션으로 데이터를 가져오는 방법은 여러 가지가 있다.
+  프로젝션으로 데이터를 가져오는 방법은 여러 가지가 있고 책에서 다소 많은 지면에 걸쳐 설명하고 있다. 
+
 
 
 [처음](../README.md) | [이전](../02/README.md) | [다음](../04/README.md) 
