@@ -17,7 +17,7 @@
 		
        Singer singer1 = singerRepository.findById(singerId).get();
        
-       Singer singer2 = singerService2.insertOrUpdate(Long.parseLong("2"));
+       Singer singer2 = singerService2.insertOrUpdate(singerId);
        
        Singer singer3 = singerRepository.Find_Singer(singerId);
 		
@@ -96,8 +96,11 @@ select 하는 속성만 다른 동일 쿼리가 많다면? 즉 리턴되는 결�
   타입 파라미터는 컬렉션의 요소 타입일 수도 있고 단일 타입일 수도 있다. 타입은 서비스 클래스에서 호출할 때 전달하면 된다. 
 
 - 프로젝션에 엔티티가 포함되는 경우  
-  JPQL을 사용하여 가져온 엔티티를 수정하게 되면 플러시 시점에 업데이트가 트리거 된다(당연한 것 같은데?)
+  JPQL을 사용하여 가져온 엔티티를 수정하게 되면 플러시 시점에 업데이트가 트리거 된다(당연한 것 같은데?).
 
+- 프로젝션의 속성이 엔티티 속성일 수도 있지만 그렇지 않은 "가상" 속성을 포함할 수도 있는데 이것을 "열린(opened)" 프로젝션이라고 한다. 책에서는 상수 또는 spEL 표현식을 이용한 계산된 값을 가지는 속성을 프로젝션에 포함시키고 있다. 
+
+- *-toOne 연관관계 프로젝션  
 
 
 
