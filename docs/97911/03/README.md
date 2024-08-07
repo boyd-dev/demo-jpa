@@ -69,7 +69,7 @@
 
   >For read-only transactions, you should fetch DTO projections because they allow you to select just as many columns as you need to fulfill a certain business use case. This has many benefits like reducing the load on the currently running Persistence Context because DTO projections don’t need to be managed.
 
-  프로젝션은 기본적으로 하이버네이트에 의해 관리되지 않으므로 여러 관리상의 리소스를 절약할 수 있다. 프로젝션으로 데이터를 페치하는 방법은 여러가지가 있고 책에서 다소 많은 지면에 걸쳐 설명하고 있다. 
+  프로젝션은 기본적으로 persistent context에서 관리되지 않으므로 리소스를 절약할 수 있다. 프로젝션으로 데이터를 페치하는 방법은 여러가지가 있고 책에서 다소 많은 지면에 걸쳐 설명하고 있다. 
 
 - 닫힌(closed) 인터페이스  
 필요한 속성만으로 get 메소드를 가지는 인터페이스를 생성한다. 메소드는 속성이름에 대응되어야 한다. "closed"는 인터페이스가 엔티티의 속성만을 포함한다는 것을 의미한다. 따라서 그 엔티티의 레포지토리 안에 nested 인터페이스로 정의될 수도 있다.  
