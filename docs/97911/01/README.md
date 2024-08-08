@@ -80,7 +80,7 @@
   @NamedEntityGraph(
 		name = "singer_albums_graph",
 		attributeNodes = {
-         @NamedAttributeNode("albums")
+            @NamedAttributeNode("albums")
 		}
   )
   public class Singer extends BaseEntity implements Serializable {
