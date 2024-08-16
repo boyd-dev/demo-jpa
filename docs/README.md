@@ -29,10 +29,7 @@
 8. [스프링 데이터 JPA](08/README.md)
 9. [JPA Repository](09/README.md)
 10. [Custom Repository](10/README.md)
-
-기타  
-
-1. [스프링 부트 JPA 모범 사례](97911/README.md)
+11. [Criteria API](11/README.md)
 
 
 참고  

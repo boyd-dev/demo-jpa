@@ -40,4 +40,4 @@ public interface SingerRepository extends JpaRepository<Singer, Long>, SingerCus
 커스텀 레포지토리는 스프링 데이터 JPA에서 `EntityManager`를 직접 활용하려고 할 때 또는 JPA에 국한하지 않고 다양한 데이터 액세스 방식을 적용할 때 고려할 수 있겠습니다.
 
 
-[처음](../README.md)
+[처음](../README.md) | [다음](../11/README.md)
