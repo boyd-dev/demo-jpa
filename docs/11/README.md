@@ -41,14 +41,14 @@ JDK 6 이상에서는 디펜던시에 추가하는 것만으로도 자동 실행
 ```
 public List<Singer> fetchSingerByBirthDate(Date birthDate) {
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Singer> cq = cb.createQuery(Singer.class);		
-		Root<Singer> root = cq.from(Singer.class);		
+      CriteriaBuilder cb = em.getCriteriaBuilder();
+      CriteriaQuery<Singer> cq = cb.createQuery(Singer.class);		
+      Root<Singer> root = cq.from(Singer.class);		
 		
-        // restrictions
-        cq.where(cb.greaterThan(root.get(Singer_.birthDate), birthDate));	
+      // restrictions
+      cq.where(cb.greaterThan(root.get(Singer_.birthDate), birthDate));	
 
-		return em.createQuery(cq).getResultList();
+      return em.createQuery(cq).getResultList();
 }
 ```
 
