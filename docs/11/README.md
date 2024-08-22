@@ -29,7 +29,29 @@ dependencies {
     <version>${hibernate.version}</version>
 </dependency>
 ```
-JDK 6 이상에서는 디펜던시에 추가하는 것만으로도 자동 실행이 됩니다.
+JDK 6 이상에서는 디펜던시에 추가하는 것만으로도 자동 실행이 됩니다.  
+
+이와는 별도록 개발 도구에서 메타모델을 생성하기 위해서는, STS 4 기준으로, 해당 프로젝트의 Properties > Java Compiler > Annotation Processing 을 설정해야 합니다. 
+
+![ap](./ap1.png)
+![ap](./ap2.png)
+
+메타모델 클래스가 생성되었으면 이제 이것을 이용하여 Criteria API를 사용할 수 있습니다. 예를 들어 출생일을 조건으로 Singer를 조회하는 쿼리를 작성하도록 하겠습니다.
+
+```
+public List<Singer> fetchSingerByBirthDate(Date birthDate) {
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Singer> cq = cb.createQuery(Singer.class);		
+		Root<Singer> root = cq.from(Singer.class);		
+		
+        // restrictions
+        cq.where(cb.greaterThan(root.get(Singer_.birthDate), birthDate));	
+
+		return em.createQuery(cq).getResultList();
+}
+```
+
 
 
 
